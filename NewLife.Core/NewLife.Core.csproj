@@ -94,7 +94,6 @@
     <Compile Include="Agent\ServiceHelper.cs" />
     <Compile Include="Agent\ServiceItem.cs" />
     <Compile Include="Agent\Setting.cs" />
-    <Compile Include="Applications\IP\Ip.cs" />
     <Compile Include="Applications\IP\Zip.cs" />
     <Compile Include="Caching\Cache.cs" />
     <Compile Include="Caching\ICache.cs" />
