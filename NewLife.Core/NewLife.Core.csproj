@@ -188,7 +188,6 @@
     <Compile Include="Net\SessionCollection.cs" />
     <Compile Include="Net\UdpServer.cs" />
     <Compile Include="Net\UdpSession.cs" />
-    <Compile Include="Net\Upgrade.cs" />
     <Compile Include="Net\SessionBase.cs" />
     <Compile Include="Net\ISocketSession.cs" />
     <Compile Include="Extension\EnumHelper.cs" />
