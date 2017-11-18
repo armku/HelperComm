@@ -77,15 +77,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent\AgentService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Agent\AgentServiceBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Agent\AgentServiceBase_Base.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Agent\IAgentService.cs" />
     <Compile Include="Agent\IJob.cs" />
     <Compile Include="Agent\JobContext.cs" />
