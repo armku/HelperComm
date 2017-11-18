@@ -20,8 +20,6 @@ namespace XICO
 
             //AllowDrop = true;
             picSrc.AllowDrop = true;
-
-            Icon = IcoHelper.GetIcon("图标");
         }
 
         private void FrmMain_Shown(Object sender, EventArgs e)

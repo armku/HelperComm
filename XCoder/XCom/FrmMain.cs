@@ -20,8 +20,6 @@ namespace XCom
         public FrmMain()
         {
             InitializeComponent();
-
-            Icon = IcoHelper.GetIcon("串口");
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)

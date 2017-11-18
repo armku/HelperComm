@@ -17,9 +17,7 @@ namespace XCoder
         {
             _load = Task<Type[]>.Factory.StartNew(() => typeof(IXForm).GetAllSubclasses(true).ToArray());
 
-            InitializeComponent();
-
-            Icon = Source.GetIcon();
+            InitializeComponent();           
         }
 
         private void FrmMDI_Shown(Object sender, EventArgs e)

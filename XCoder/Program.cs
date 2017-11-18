@@ -8,7 +8,6 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
 using NewLife.Xml;
-using XCode.DataAccessLayer;
 
 namespace XCoder
 {
