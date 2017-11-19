@@ -306,21 +306,12 @@
     <Compile Include="Web\WebHelper.cs" />
     <Compile Include="Net\SerialPortConfig.cs" />
     <Compile Include="Windows\ControlHelper.cs" />
-    <Compile Include="Windows\SerialPortList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\SerialPortList.designer.cs">
-      <DependentUpon>SerialPortList.cs</DependentUpon>
-    </Compile>
     <Compile Include="Xml\SerializableDictionary.cs" />
     <Compile Include="Xml\XmlConfig.cs" />
     <Compile Include="Xml\XmlConfigFileAttribute.cs" />
     <Compile Include="Xml\XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Windows\SerialPortList.resx">
-      <DependentUpon>SerialPortList.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="Extension\EndPointExtensions.cs" />
     <None Include="X组件.txt" />
     <Content Include="说明.txt" />
