@@ -136,12 +136,7 @@ namespace NewLife.Log
 #endif
 
                 var set = Setting.Current;
-                if (!set.NetworkLog.IsNullOrEmpty())
-                {
-                    var nlog = new NetworkLog(NetHelper.ParseEndPoint(set.NetworkLog, 514));
-                    _Log = new CompositeLog(_Log, nlog);
-                }
-
+                
                 _initing = 0;
             }
 

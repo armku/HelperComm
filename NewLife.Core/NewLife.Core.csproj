@@ -98,16 +98,13 @@
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpResponse.cs" />
-    <Compile Include="Http\TinyHttpClient.cs" />
     <Compile Include="IO\EncodingHelper.cs" />
     <Compile Include="IO\PathHelper.cs" />
-    <Compile Include="Log\ActionLog.cs" />
     <Compile Include="Log\CompositeLog.cs" />
     <Compile Include="Log\ConsoleLog.cs" />
     <Compile Include="Log\ILog.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Log\LogLevel.cs" />
-    <Compile Include="Log\NetworkLog.cs" />
     <Compile Include="Log\TextControlLog.cs" />
     <Compile Include="Log\TimeCost.cs" />
     <Compile Include="Messaging\DefaultMessage.cs" />
