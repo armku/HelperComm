@@ -111,70 +111,6 @@ namespace NewLife.Net
         }
         #endregion
         
-        #region 构造
-        /// <summary>实例化</summary>
-        public NetUri() { }
-
-        /// <summary>实例化</summary>
-        /// <param name="uri"></param>
-        public NetUri(String uri) { Parse(uri); }
-        
-        #endregion
-
-        #region 方法
-        static readonly String Sep = "://";
-
-        /// <summary>分析</summary>
-        /// <param name="uri"></param>
-        public NetUri Parse(String uri)
-        {
-            if (uri.IsNullOrWhiteSpace()) return this;
-
-            // 分析协议
-            var p = uri.IndexOf(Sep);
-            if (p >= 0)
-            {
-                Protocol = uri.Substring(0, p);
-                uri = uri.Substring(p + Sep.Length);
-            }
-
-            // 特殊协议端口
-            switch (Protocol?.ToLower())
-            {
-                case "http":
-                case "ws":
-                    Port = 80;
-                    break;
-                case "https":
-                case "wss":
-                    Port = 443;
-                    break;
-            }
-
-            // 这个可能是一个Uri，去掉尾部
-            p = uri.IndexOf('/');
-            if (p < 0) p = uri.IndexOf('\\');
-            if (p < 0) p = uri.IndexOf('?');
-            if (p >= 0) uri = uri.Substring(0, p);
-
-            // 分析端口
-            p = uri.LastIndexOf(":");
-            if (p >= 0)
-            {
-                var pt = uri.Substring(p + 1);
-                if (Int32.TryParse(pt, out var port))
-                {
-                    Port = port;
-                    uri = uri.Substring(0, p);
-                }
-            }
-
-            Host = uri;
-
-            return this;
-        }
-        #endregion
-
         #region 辅助
         /// <summary>分析地址</summary>
         /// <param name="hostname">主机地址</param>
@@ -218,16 +154,6 @@ namespace NewLife.Net
             else
                 return String.Format("{0}://{1}", p, Host);
         }
-        #endregion
-
-        #region 重载运算符
-        /// <summary>重载类型转换，字符串直接转为NetUri对象</summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static implicit operator NetUri(String value)
-        {
-            return new NetUri(value);
-        }
-        #endregion
+        #endregion        
     }
 }
