@@ -74,9 +74,7 @@ namespace XCom
                 BizLog.Info(cmd);
                 //TextControlLog.WriteLog(txtReceive, cmd);
             }
-
-            "连接串口{0}".F(st.PortName).SpeechTip();
-
+            
             btnConnect.Text = "关闭";
 
             var menu = txtReceive.ContextMenuStrip;
@@ -95,9 +93,7 @@ namespace XCom
             var st = spList.Port;
             if (st != null) st.Disconnected -= (s, e) => this.Invoke(Disconnect);
             spList.Disconnect();
-
-            "串口已断开".SpeechTip();
-
+            
             btnConnect.Text = "打开";
         }
 

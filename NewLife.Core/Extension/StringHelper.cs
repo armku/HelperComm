@@ -776,59 +776,7 @@ namespace System
             return rs.Select(e => e.Key);
         }
         #endregion
-
-        #region 文字转语音
-#if __MOBILE__
-#elif __CORE__
-#else
-        private static NewLife.Extension.SpeakProvider _provider;
-        //private static System.Speech.Synthesis.SpeechSynthesizer _provider;
-        static void Init()
-        {
-            if (_provider == null)
-            {
-                //_provider = new Speech.Synthesis.SpeechSynthesizer();
-                //_provider.SetOutputToDefaultAudioDevice();
-                _provider = new NewLife.Extension.SpeakProvider();
-            }
-        }
-
-        /// <summary>调用语音引擎说出指定话</summary>
-        /// <param name="value"></param>
-        public static void Speak(this String value)
-        {
-            Init();
-
-            _provider.Speak(value);
-        }
-
-        /// <summary>异步调用语音引擎说出指定话。可能导致后来的调用打断前面的语音</summary>
-        /// <param name="value"></param>
-        public static void SpeakAsync(this String value)
-        {
-            Init();
-
-            _provider.SpeakAsync(value);
-        }
-
-        /// <summary>启用语音提示</summary>
-        public static Boolean EnableSpeechTip { get; set; } = true;
-
-        /// <summary>语音提示操作</summary>
-        /// <param name="value"></param>
-        public static void SpeechTip(this String value)
-        {
-            if (!EnableSpeechTip) return;
-
-            try
-            {
-                SpeakAsync(value);
-            }
-            catch { }
-        }
-#endif
-        #endregion
-
+           
         #region 执行命令行
         /// <summary>以隐藏窗口执行命令行</summary>
         /// <param name="cmd">文件名</param>

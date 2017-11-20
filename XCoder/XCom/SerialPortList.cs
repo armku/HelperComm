@@ -156,9 +156,7 @@ namespace NewLife.Windows
             var str = String.Join(",", ps);
             // 如果端口有所改变，则重新绑定
             if (_ports != str)
-            {
-                if (_ports != null) "串口有改变".SpeechTip();
-
+            {                
                 _ports = str;
 
                 this.Invoke(() =>
@@ -256,7 +254,6 @@ namespace NewLife.Windows
             var name = cbName.SelectedItem + "";
             if (String.IsNullOrEmpty(name))
             {
-                "请选择串口".SpeechTip();
                 MessageBox.Show("请选择串口！", Text);
                 cbName.Focus();
                 return;
