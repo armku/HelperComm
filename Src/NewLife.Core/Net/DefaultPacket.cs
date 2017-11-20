@@ -57,24 +57,7 @@ namespace NewLife.Net
             return Queue.Add(this, request, remote, msTimeout);
         }
     }
-
-    /// <summary>标准封包工厂</summary>
-    [DisplayName("标准封包")]
-    public class DefaultPacketFactory : IPacketFactory
-    {
-        /// <summary>服务端多会话共用</summary>
-        private IPacketQueue _queue;
-
-        /// <summary>创建粘包处理实例，内含缓冲区，不同会话不能共用</summary>
-        /// <returns></returns>
-        public virtual IPacket Create()
-        {
-            if (_queue == null) _queue = new MyQueue();
-
-            return new DefaultPacket { Queue = _queue };
-        }
-    }
-
+    
     class MyQueue : DefaultPacketQueue
     {
         /// <summary>请求和响应是否匹配</summary>

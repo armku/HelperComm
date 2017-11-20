@@ -64,15 +64,6 @@ namespace NewLife.Net
         #endregion
 
         #region 构造
-        /// <summary>构造函数，初始化默认名称</summary>
-        public SessionBase()
-        {
-            Name = GetType().Name;
-            LogPrefix = "{0}.".F((Name + "").TrimEnd("Server", "Session", "Client"));
-
-            BufferSize = Setting.Current.BufferSize;
-        }
-
         /// <summary>销毁</summary>
         /// <param name="disposing"></param>
         protected override void OnDispose(Boolean disposing)

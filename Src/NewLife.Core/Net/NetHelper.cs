@@ -71,59 +71,6 @@ namespace System
         /// <param name="address"></param>
         /// <returns></returns>
         public static Boolean IsIPv4(this IPAddress address) { return address.AddressFamily == AddressFamily.InterNetwork; }
-
-        /// <summary>获取相对于指定远程地址的本地地址</summary>
-        /// <param name="address"></param>
-        /// <param name="remote"></param>
-        /// <returns></returns>
-        public static IPAddress GetRelativeAddress(this IPAddress address, IPAddress remote)
-        {
-            // 如果不是任意地址，直接返回
-            var addr = address;
-            if (addr == null || !addr.IsAny()) return addr;
-
-            // 如果是本地环回地址，返回环回地址
-            if (IPAddress.IsLoopback(remote)) return addr.IsIPv4() ? IPAddress.Loopback : IPAddress.IPv6Loopback;
-
-            // 否则返回本地第一个IP地址
-            foreach (var item in NetHelper.GetIPsWithCache())
-            {
-                if (item.AddressFamily == addr.AddressFamily) return item;
-            }
-            return null;
-        }
-        
-
-        /// <summary>指定地址的指定端口是否已被使用，似乎没办法判断IPv6地址</summary>
-        /// <param name="protocol"></param>
-        /// <param name="address"></param>
-        /// <param name="port"></param>
-        /// <returns></returns>
-        public static Boolean CheckPort(this IPAddress address, NetType protocol, Int32 port)
-        {
-            var gp = IPGlobalProperties.GetIPGlobalProperties();
-
-            IPEndPoint[] eps = null;
-            switch (protocol)
-            {
-                case NetType.Tcp:
-                    eps = gp.GetActiveTcpListeners();
-                    break;
-                case NetType.Udp:
-                    eps = gp.GetActiveUdpListeners();
-                    break;
-                default:
-                    return false;
-            }
-
-            foreach (var item in eps)
-            {
-                // 先比较端口，性能更好
-                if (item.Port == port && item.Address.Equals(address)) return true;
-            }
-
-            return false;
-        }
         
         #endregion
 
@@ -208,11 +155,7 @@ namespace System
         {
             return new Socket(ipv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
         }
-
-        internal static Socket CreateUdp(Boolean ipv4 = true)
-        {
-            return new Socket(ipv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
-        }
+        
         #endregion
     }
 }

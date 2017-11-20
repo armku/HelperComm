@@ -110,17 +110,7 @@ namespace NewLife.Net
             }
         }
         #endregion
-
-        #region 扩展属性
-        /// <summary>是否Tcp协议</summary>
-        [XmlIgnore]
-        public Boolean IsTcp { get { return Type == NetType.Tcp; } }
-
-        /// <summary>是否Udp协议</summary>
-        [XmlIgnore]
-        public Boolean IsUdp { get { return Type == NetType.Udp; } }
-        #endregion
-
+        
         #region 构造
         /// <summary>实例化</summary>
         public NetUri() { }
@@ -128,37 +118,7 @@ namespace NewLife.Net
         /// <summary>实例化</summary>
         /// <param name="uri"></param>
         public NetUri(String uri) { Parse(uri); }
-
-        /// <summary>实例化</summary>
-        /// <param name="protocol"></param>
-        /// <param name="endpoint"></param>
-        public NetUri(NetType protocol, IPEndPoint endpoint)
-        {
-            Type = protocol;
-            EndPoint = endpoint;
-        }
-
-        /// <summary>实例化</summary>
-        /// <param name="protocol"></param>
-        /// <param name="address"></param>
-        /// <param name="port"></param>
-        public NetUri(NetType protocol, IPAddress address, Int32 port)
-        {
-            Type = protocol;
-            Address = address;
-            Port = port;
-        }
-
-        /// <summary>实例化</summary>
-        /// <param name="protocol"></param>
-        /// <param name="host"></param>
-        /// <param name="port"></param>
-        public NetUri(NetType protocol, String host, Int32 port)
-        {
-            Type = protocol;
-            Host = host;
-            Port = port;
-        }
+        
         #endregion
 
         #region 方法

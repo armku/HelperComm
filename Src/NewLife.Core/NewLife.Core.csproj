@@ -127,7 +127,6 @@
     <Compile Include="Net\ISocketServer.cs" />
     <Compile Include="Net\ISocketClient.cs" />
     <Compile Include="Net\IStatistics.cs" />
-    <Compile Include="Net\NetException.cs" />
     <Compile Include="Net\NetHelper.cs" />
     <Compile Include="Net\ReceivedEventArgs.cs" />
     <Compile Include="Net\ITransport.cs" />
@@ -138,7 +137,6 @@
     <Compile Include="Net\SocketHelper.cs" />
     <Compile Include="Net\Statistics.cs" />
     <Compile Include="Net\TcpSession.cs" />
-    <Compile Include="Net\SessionCollection.cs" />
     <Compile Include="Net\SessionBase.cs" />
     <Compile Include="Net\ISocketSession.cs" />
     <Compile Include="Extension\EnumHelper.cs" />

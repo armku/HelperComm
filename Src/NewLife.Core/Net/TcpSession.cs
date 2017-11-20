@@ -35,15 +35,7 @@ namespace NewLife.Net
             Local.Type = NetType.Tcp;
             Remote.Type = NetType.Tcp;
         }
-
-        /// <summary>使用监听口初始化</summary>
-        /// <param name="listenPort"></param>
-        public TcpSession(Int32 listenPort)
-            : this()
-        {
-            Port = listenPort;
-        }
-
+        
         /// <summary>用TCP客户端初始化</summary>
         /// <param name="client"></param>
         public TcpSession(Socket client)
