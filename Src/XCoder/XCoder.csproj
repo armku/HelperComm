@@ -64,7 +64,10 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\UIConfig.cs" />
+    <Compile Include="XCom\IPacket.cs" />
+    <Compile Include="XCom\IPacketQueue.cs" />
     <Compile Include="XCom\ITransport.cs" />
+    <Compile Include="XCom\ReceivedEventArgs.cs" />
     <Compile Include="XCom\SerialPortConfig.cs" />
     <Compile Include="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>

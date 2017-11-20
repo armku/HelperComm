@@ -113,10 +113,7 @@
     <Compile Include="Model\IPlugin.cs" />
     <Compile Include="Model\ModelExtension.cs" />
     <Compile Include="Model\ObjectContainerHelper.cs" />
-    <Compile Include="Net\IPacket.cs" />
-    <Compile Include="Net\IPacketQueue.cs" />
     <Compile Include="Net\IStatistics.cs" />
-    <Compile Include="Net\ReceivedEventArgs.cs" />
     <Compile Include="Net\Setting.cs" />
     <Compile Include="Net\Statistics.cs" />
     <Compile Include="Extension\EnumHelper.cs" />
