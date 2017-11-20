@@ -88,8 +88,6 @@
     <Compile Include="Common\Runtime.cs" />
     <Compile Include="Common\SysConfig.cs" />
     <Compile Include="Common\Utility.cs" />
-    <Compile Include="Compression\SevenZip.cs" />
-    <Compile Include="Configuration\CombConfig.cs" />
     <Compile Include="Data\IFilter.cs" />
     <Compile Include="Data\Packet.cs" />
     <Compile Include="Extension\ConcurrentDictionaryExtensions.cs" />
@@ -115,7 +113,6 @@
     <Compile Include="Model\ObjectContainerHelper.cs" />
     <Compile Include="Extension\EnumHelper.cs" />
     <Compile Include="Extension\StringHelper.cs" />
-    <Compile Include="Configuration\Config.cs" />
     <Compile Include="Common\DisposeBase.cs" />
     <Compile Include="Exceptions\XException.cs" />
     <Compile Include="IO\IOHelper.cs" />

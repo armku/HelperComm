@@ -3,7 +3,6 @@ using System.Text;
 //using NewLife.IO;
 #if !__MOBILE__
 using System.IO.Compression;
-using NewLife.Compression;
 #endif
 
 namespace System.IO
@@ -158,71 +157,6 @@ namespace System.IO
             }
             return path;
         }
-        #endregion
-
-        #region 文件扩展
-        /// <summary>文件路径作为文件信息</summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public static FileInfo AsFile(this String file) { return new FileInfo(file.GetFullPath()); }
-        
-#if !__MOBILE__ && !NET4
-        /// <summary>解压缩</summary>
-        /// <param name="fi"></param>
-        /// <param name="destDir"></param>
-        /// <param name="overwrite">是否覆盖目标同名文件</param>
-        public static void Extract(this FileInfo fi, String destDir, Boolean overwrite = false)
-        {
-            if (destDir.IsNullOrEmpty()) destDir = fi.Name.GetFullPath();
-
-            //ZipFile.ExtractToDirectory(fi.FullName, destDir);
-
-            if (fi.Name.EndsWithIgnoreCase(".zip"))
-            {
-                using (var zip = ZipFile.Open(fi.FullName, ZipArchiveMode.Read, null))
-                {
-                    var di = Directory.CreateDirectory(destDir);
-                    var fullName = di.FullName;
-                    foreach (var current in zip.Entries)
-                    {
-                        var fullPath = Path.GetFullPath(Path.Combine(fullName, current.FullName));
-                        if (!fullPath.StartsWith(fullName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            throw new IOException("IO_ExtractingResultsInOutside");
-                        }
-                        if (Path.GetFileName(fullPath).Length == 0)
-                        {
-                            if (current.Length != 0L)
-                            {
-                                throw new IOException("IO_DirectoryNameWithData");
-                            }
-                            Directory.CreateDirectory(fullPath);
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                            try
-                            {
-                                current.ExtractToFile(fullPath, overwrite);
-                            }
-                            catch { }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                new SevenZip().Extract(fi.FullName, destDir);
-            }
-        }
-#endif
-        #endregion
-
-        #region 目录扩展
-        /// <summary>路径作为目录信息</summary>
-        /// <param name="dir"></param>
-        /// <returns></returns>
-        public static DirectoryInfo AsDirectory(this String dir) { return new DirectoryInfo(dir.GetFullPath()); }        
         #endregion
     }
 }
