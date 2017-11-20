@@ -48,32 +48,12 @@ namespace System
         /// <returns></returns>
         public static DateTime ToDateTime(this Object value) { return Convert.ToDateTime(value, DateTime.MinValue); }
 
-        /// <summary>转为时间日期，转换失败时返回默认值</summary>
-        /// <remarks><see cref="DateTime.MinValue"/>不是常量无法做默认值</remarks>
-        /// <param name="value">待转换对象</param>
-        /// <param name="defaultValue">默认值。待转换对象无效时使用</param>
-        /// <returns></returns>
-        public static DateTime ToDateTime(this Object value, DateTime defaultValue) { return Convert.ToDateTime(value, defaultValue); }
-
         /// <summary>时间日期转为yyyy-MM-dd HH:mm:ss完整字符串</summary>
         /// <remarks>最常用的时间日期格式，可以无视各平台以及系统自定义的时间格式</remarks>
         /// <param name="value">待转换对象</param>
         /// <returns></returns>
         public static String ToFullString(this DateTime value) { return Convert.ToFullString(value); }
-
-        /// <summary>时间日期转为yyyy-MM-dd HH:mm:ss完整字符串，支持指定最小时间的字符串</summary>
-        /// <remarks>最常用的时间日期格式，可以无视各平台以及系统自定义的时间格式</remarks>
-        /// <param name="value">待转换对象</param>
-        /// <param name="emptyValue">字符串空值时（DateTime.MinValue）显示的字符串，null表示原样显示最小时间，String.Empty表示不显示</param>
-        /// <returns></returns>
-        public static String ToFullString(this DateTime value, String emptyValue = null) { return Convert.ToFullString(value, emptyValue); }
-
-        /// <summary>时间日期转为指定格式字符串</summary>
-        /// <param name="value">待转换对象</param>
-        /// <param name="format">格式化字符串</param>
-        /// <param name="emptyValue">字符串空值时显示的字符串，null表示原样显示最小时间，String.Empty表示不显示</param>
-        /// <returns></returns>
-        public static String ToString(this DateTime value, String format, String emptyValue) { return Convert.ToString(value, format, emptyValue); }
+        
         #endregion
 
         #region 异常处理

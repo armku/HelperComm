@@ -52,67 +52,7 @@ namespace System
 
             return outStream;
         }
-
-        /// <summary>压缩字节数组</summary>
-        /// <param name="data">字节数组</param>
-        /// <returns></returns>
-        public static Byte[] Compress(this Byte[] data)
-        {
-            var ms = new MemoryStream();
-            Compress(new MemoryStream(data), ms);
-            return ms.ToArray();
-        }
-
-        /// <summary>解压缩字节数组</summary>
-        /// <param name="data">字节数组</param>
-        /// <returns></returns>
-        public static Byte[] Decompress(this Byte[] data)
-        {
-            var ms = new MemoryStream();
-            Decompress(new MemoryStream(data), ms);
-            return ms.ToArray();
-        }
-
-        /// <summary>压缩数据流</summary>
-        /// <param name="inStream">输入流</param>
-        /// <param name="outStream">输出流。如果不指定，则内部实例化一个内存流</param>
-        /// <remarks>返回输出流，注意此时指针位于末端</remarks>
-        public static Stream CompressGZip(this Stream inStream, Stream outStream = null)
-        {
-            if (outStream == null) outStream = new MemoryStream();
-
-            // 第三个参数为true，保持数据流打开，内部不应该干涉外部，不要关闭外部的数据流
-#if NET4
-            using (var stream = new GZipStream(outStream, CompressionMode.Compress, true))
-#else
-            using (var stream = new GZipStream(outStream, CompressionLevel.Optimal, true))
-#endif
-            {
-                inStream.CopyTo(stream);
-                stream.Flush();
-                //stream.Close();
-            }
-
-            return outStream;
-        }
-
-        /// <summary>解压缩数据流</summary>
-        /// <param name="inStream">输入流</param>
-        /// <param name="outStream">输出流。如果不指定，则内部实例化一个内存流</param>
-        /// <remarks>返回输出流，注意此时指针位于末端</remarks>
-        public static Stream DecompressGZip(this Stream inStream, Stream outStream = null)
-        {
-            if (outStream == null) outStream = new MemoryStream();
-
-            // 第三个参数为true，保持数据流打开，内部不应该干涉外部，不要关闭外部的数据流
-            using (var stream = new GZipStream(inStream, CompressionMode.Decompress, true))
-            {
-                stream.CopyTo(outStream);
-                //stream.Close();
-            }
-
-            return outStream;
-        }
+        
         #endregion
 
         #region 复制数据流
@@ -237,19 +177,7 @@ namespace System
 
             return total;
         }
-
-        /// <summary>把一个数据流写入到另一个数据流</summary>
-        /// <param name="des">目的数据流</param>
-        /// <param name="src">源数据流</param>
-        /// <param name="bufferSize">缓冲区大小，也就是每次复制的大小</param>
-        /// <param name="max">最大复制字节数</param>
-        /// <returns></returns>
-        public static Stream Write(this Stream des, Stream src, Int32 bufferSize = 0, Int32 max = 0)
-        {
-            src.CopyTo(des, bufferSize, max);
-            return des;
-        }
-
+        
         /// <summary>把一个字节数组写入到一个数据流</summary>
         /// <param name="des">目的数据流</param>
         /// <param name="src">源数据流</param>
@@ -259,76 +187,10 @@ namespace System
             if (src != null && src.Length > 0) des.Write(src, 0, src.Length);
             return des;
         }
-
-        /// <summary>写入字节数组，先写入压缩整数表示的长度</summary>
-        /// <param name="des"></param>
-        /// <param name="src"></param>
-        /// <returns></returns>
-        public static Stream WriteArray(this Stream des, params Byte[] src)
-        {
-            if (src == null || src.Length == 0)
-            {
-                des.WriteByte(0);
-                return des;
-            }
-
-            des.WriteEncodedInt(src.Length);
-            return des.Write(src);
-        }
-
-        /// <summary>读取字节数组，先读取压缩整数表示的长度</summary>
-        /// <param name="des"></param>
-        /// <returns></returns>
-        public static Byte[] ReadArray(this Stream des)
-        {
-            var len = des.ReadEncodedInt();
-            if (len <= 0) return new Byte[0];
-
-            // 避免数据错乱超长
-            //if (des.CanSeek && len > des.Length - des.Position) len = (Int32)(des.Length - des.Position);
-            if (des.CanSeek && len > des.Length - des.Position) throw new XException("ReadArray错误，变长数组长度为{0}，但数据流可用数据只有{1}", len, des.Length - des.Position);
-
-            if (len > 1024 * 2) throw new XException("安全需要，不允许读取超大变长数组 {0:n0}>{1:n0}", len, 1024 * 2);
-
-            return des.ReadBytes(len);
-        }
-
+        
         private static DateTime _dt1970 = new DateTime(1970, 1, 1);
-        /// <summary>写入Unix格式时间，1970年以来秒数</summary>
-        /// <param name="stream"></param>
-        /// <param name="dt"></param>
-        /// <param name="baseYear"></param>
-        /// <returns></returns>
-        public static Stream WriteDateTime(this Stream stream, DateTime dt, Int32 baseYear = 1970)
-        {
-            var seconds = -1;
-            if (dt.Year >= baseYear)
-            {
-                var bdt = baseYear == 1970 ? _dt1970 : new DateTime(baseYear, 1, 1);
-                seconds = (Int32)(dt - bdt).TotalSeconds;
-            }
-
-            stream.Write(seconds.GetBytes());
-
-            return stream;
-        }
-
-        /// <summary>读取Unix格式时间，1970年以来秒数</summary>
-        /// <param name="stream"></param>
-        /// <param name="baseYear"></param>
-        /// <returns></returns>
-        public static DateTime ReadDateTime(this Stream stream, Int32 baseYear = 1970)
-        {
-            var bdt = baseYear == 1970 ? _dt1970 : new DateTime(baseYear, 1, 1);
-
-            var buf = new Byte[4];
-            stream.Read(buf, 0, 4);
-            var seconds = (Int32)buf.ToUInt32();
-            if (seconds <= 0) return bdt;
-
-            return bdt.AddSeconds(seconds);
-        }
-
+       
+        
         /// <summary>复制数组</summary>
         /// <param name="src">源数组</param>
         /// <param name="offset">起始位置</param>
@@ -345,41 +207,7 @@ namespace System
             Buffer.BlockCopy(src, offset, bts, 0, bts.Length);
             return bts;
         }
-
-        /// <summary>向字节数组写入一片数据</summary>
-        /// <param name="dst">目标数组</param>
-        /// <param name="dstOffset">目标偏移</param>
-        /// <param name="src">源数组</param>
-        /// <param name="srcOffset">源数组偏移</param>
-        /// <param name="count">数量</param>
-        /// <returns></returns>
-        public static Byte[] Write(this Byte[] dst, Int32 dstOffset, Byte[] src, Int32 srcOffset = 0, Int32 count = -1)
-        {
-            if (count <= 0) count = src.Length - srcOffset;
-
-#if MF
-            Array.Copy(src, srcOffset, dst, dstOffset, count);
-#else
-            Buffer.BlockCopy(src, srcOffset, dst, dstOffset, count);
-#endif
-            return dst;
-        }
-
-        /// <summary>合并两个数组</summary>
-        /// <param name="src">源数组</param>
-        /// <param name="des">目标数组</param>
-        /// <param name="offset">起始位置</param>
-        /// <param name="count">字节数</param>
-        /// <returns></returns>
-        public static Byte[] Combine(this Byte[] src, Byte[] des, Int32 offset = 0, Int32 count = -1)
-        {
-            if (count < 0) count = src.Length - offset;
-
-            var buf = new Byte[src.Length + count];
-            Buffer.BlockCopy(src, 0, buf, 0, src.Length);
-            Buffer.BlockCopy(des, offset, buf, src.Length, count);
-            return buf;
-        }
+        
         #endregion
 
         #region 数据流转换

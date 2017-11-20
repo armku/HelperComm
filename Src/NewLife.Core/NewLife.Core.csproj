@@ -95,10 +95,8 @@
     <Compile Include="Extension\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extension\ListExtension.cs" />
     <Compile Include="Http\HttpBase.cs" />
-    <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpResponse.cs" />
-    <Compile Include="IO\EncodingHelper.cs" />
     <Compile Include="IO\PathHelper.cs" />
     <Compile Include="Log\CompositeLog.cs" />
     <Compile Include="Log\ConsoleLog.cs" />
@@ -144,7 +142,6 @@
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Common\DisposeBase.cs" />
     <Compile Include="Exceptions\XException.cs" />
-    <Compile Include="IO\FileSource.cs" />
     <Compile Include="IO\IOHelper.cs" />
     <Compile Include="Log\TraceStream.cs" />
     <Compile Include="Log\TextFileLog.cs" />
@@ -158,10 +155,6 @@
     <Compile Include="Reflection\Reflect.cs" />
     <Compile Include="Reflection\OrcasNamer.cs" />
     <Compile Include="Reflection\ScriptEngine.cs" />
-    <Compile Include="Security\Crc16.cs" />
-    <Compile Include="Security\Rand.cs" />
-    <Compile Include="Security\RC4.cs" />
-    <Compile Include="Security\SecurityHelper.cs" />
     <Compile Include="Serialization\Binary\BinaryDictionary.cs" />
     <Compile Include="Serialization\Binary\BinaryNormal.cs" />
     <Compile Include="Serialization\Binary\BinaryList.cs" />
@@ -200,7 +193,6 @@
     <Compile Include="Event\EventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\IIndexAccessor.cs" />
-    <Compile Include="Security\Crc32.cs" />
     <Compile Include="Threading\TaskHelper.cs" />
     <Compile Include="Threading\ThreadPoolX.cs" />
     <Compile Include="Threading\TimerX.cs" />
