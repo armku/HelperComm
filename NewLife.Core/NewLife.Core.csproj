@@ -218,13 +218,11 @@
     <Compile Include="Serialization\Binary\BinaryUnknown.cs" />
     <Compile Include="Serialization\Binary\BinaryFont.cs" />
     <Compile Include="Serialization\Binary\BinaryColor.cs" />
-    <Compile Include="Serialization\Binary\BinaryTest.cs" />
     <Compile Include="Serialization\Interface\IMemberAccessor.cs" />
     <Compile Include="Serialization\Interface\IAccessor.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Serialization\Interface\IFormatterX.cs" />
-    <Compile Include="Log\CodeTimer.cs" />
     <Compile Include="Reflection\AssemblyX.cs" />
     <Compile Include="Reflection\AttributeX.cs" />
     <Compile Include="Reflection\EmitHelper.cs" />
@@ -237,7 +235,6 @@
     <Compile Include="Serialization\Json\IJson.cs" />
     <Compile Include="Serialization\Json\JsonParser.cs" />
     <Compile Include="Serialization\Json\JsonReader.cs" />
-    <Compile Include="Serialization\Json\JsonTest.cs" />
     <Compile Include="Serialization\Json\JsonWriter.cs" />
     <Compile Include="Serialization\Protocol.cs">
       <SubType>Code</SubType>
