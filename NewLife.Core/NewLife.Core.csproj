@@ -92,7 +92,6 @@
     <Compile Include="Configuration\CombConfig.cs" />
     <Compile Include="Data\IFilter.cs" />
     <Compile Include="Data\Packet.cs" />
-    <Compile Include="Extension\BitHelper.cs" />
     <Compile Include="Extension\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extension\ListExtension.cs" />
     <Compile Include="Http\HttpBase.cs" />
