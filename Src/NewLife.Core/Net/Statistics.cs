@@ -48,13 +48,7 @@ namespace NewLife.Net
 
         /// <summary>父级统计</summary>
         public IStatistics Parent { get; set; }
-
-        static Statistics()
-        {
-            //XTrace.WriteLine("统计信息格式：速度/最高速度/总次数/总数值");
-            XTrace.WriteLine("统计信息格式：速度/最高速度/总次数");
-        }
-
+        
         /// <summary>实例化一个统计对象</summary>
         public Statistics() { }
 
