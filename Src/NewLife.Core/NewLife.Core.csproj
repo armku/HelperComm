@@ -77,10 +77,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\Cache.cs" />
-    <Compile Include="Caching\ICache.cs" />
-    <Compile Include="Caching\MemoryCache.cs" />
-    <Compile Include="Caching\CacheSetting.cs" />
     <Compile Include="Collections\CollectionHelper.cs" />
     <Compile Include="Collections\DictionaryCache.cs" />
     <Compile Include="Collections\NullableDictionary.cs" />
