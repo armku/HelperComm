@@ -43,7 +43,7 @@ namespace NewLife.Remoting
             var type = GetType();
             Name = type.GetDisplayName() ?? type.Name.TrimEnd("Server");
 
-            Register(new ApiController { Host = this }, null);
+            //Register(new ApiController { Host = this }, null);
         }
 
         /// <summary>使用指定端口实例化网络服务应用接口提供者</summary>

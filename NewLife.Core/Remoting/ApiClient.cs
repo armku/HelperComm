@@ -65,7 +65,7 @@ namespace NewLife.Remoting
 
             (this as IApiSession).UserSession = this;
 
-            Register(new ApiController { Host = this }, null);
+            //Register(new ApiController { Host = this }, null);
         }
 
         /// <summary>实例化应用接口客户端</summary>
