@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
 using NewLife.Log;
-using NewLife.Web;
 
 namespace NewLife.Compression
 {
@@ -12,77 +11,7 @@ namespace NewLife.Compression
     {
         #region  基础
         private static String _7z = null;
-
-        static SevenZip()
-        {
-            var p = "";
-
-            #region 附近文件
-            if (p.IsNullOrEmpty())
-            {
-                var f = "../7z/7z.exe".GetFullPath();
-                if (File.Exists(f)) p = f;
-
-                f = "7z/7z.exe".GetFullPath();
-                if (File.Exists(f)) p = f;
-            }
-            #endregion
-
-            #region 注册表
-#if !__CORE__
-            if (p.IsNullOrEmpty())
-            {
-                var reg = Registry.LocalMachine.OpenSubKey("Software\\7-Zip");
-                if (reg == null) reg = Registry.LocalMachine.OpenSubKey("Software\\Wow6432Node\\7-Zip");
-                if (reg != null)
-                {
-                    var d = reg.GetValue("Path") + "";
-                    var f = d.CombinePath("7z.exe");
-                    if (File.Exists(f)) p = f;
-                }
-            }
-#endif
-            #endregion
-
-            #region X组件缓存
-#if !__CORE__
-            var cache = Environment.SystemDirectory.CombinePath(@"..\..\X\7z").GetFullPath();
-#else
-            var cache = Path.GetPathRoot(".".GetFullPath()).CombinePath(@"\X\7z").GetFullPath();
-#endif
-            if (p.IsNullOrEmpty())
-            {
-                var f = cache.CombinePath("7z.exe");
-                if (File.Exists(f)) p = f;
-            }
-            #endregion
-
-            #region 自动下载
-            if (p.IsNullOrEmpty())
-            {
-                XTrace.WriteLine("准备下载7z扩展包");
-
-                var url = Setting.Current.PluginServer;
-                var client = new WebClientX(true, true)
-                {
-                    Log = XTrace.Log
-                };
-                var dir = cache;
-                var file = client.DownloadLinkAndExtract(url, "7z", dir);
-                if (Directory.Exists(dir))
-                {
-                    var f = dir.CombinePath("7z.exe");
-                    if (File.Exists(f)) p = f;
-                }
-            }
-            #endregion
-
-            if (!p.IsNullOrEmpty()) _7z = p.GetFullPath();
-            #region DEBUG
-            XTrace.WriteLine("7Z目录 {0}", _7z);
-            #endregion
-        }
-
+        
         /// <summary>实例化</summary>
         public SevenZip()
         {
