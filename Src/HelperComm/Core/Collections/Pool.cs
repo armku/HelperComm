@@ -90,13 +90,13 @@ namespace NewLife.Collections
         /// <summary>申请</summary>
         /// <param name="msTimeout">池满时等待的最大超时时间。超时后仍无法得到资源将抛出异常</param>
         /// <returns></returns>
-        //public T Acquire(Int32 msTimeout = 0)
-        //{
-        //    var pi = OnAcquire(msTimeout);
-        //    if (pi == null) return default;
+        public T Acquire(Int32 msTimeout = 0)
+        {
+            var pi = OnAcquire(msTimeout);
+            if (pi == null) return default;
 
-        //    return pi.Value;
-        //}
+            return pi.Value;
+        }
 
         /// <summary>申请资源包装项，Dispose时自动归还到池中</summary>
         /// <param name="msTimeout">池满时等待的最大超时时间。超时后仍无法得到资源将抛出异常</param>
@@ -271,7 +271,7 @@ namespace NewLife.Collections
         /// <param name="value"></param>
         protected virtual Boolean OnRelease(T value)
         {
-            //if (value is DisposeBase db && db.Disposed) return false;
+            if (value is DisposeBase db && db.Disposed) return false;
 
             return true;
         }
