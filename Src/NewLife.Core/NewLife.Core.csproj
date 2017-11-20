@@ -116,10 +116,8 @@
     <Compile Include="Net\IPacket.cs" />
     <Compile Include="Net\IPacketQueue.cs" />
     <Compile Include="Net\IStatistics.cs" />
-    <Compile Include="Net\NetHelper.cs" />
     <Compile Include="Net\ReceivedEventArgs.cs" />
     <Compile Include="Net\ITransport.cs" />
-    <Compile Include="Net\NetUri.cs" />
     <Compile Include="Net\SerialTransport.cs" />
     <Compile Include="Net\Setting.cs" />
     <Compile Include="Net\Statistics.cs" />
