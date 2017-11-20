@@ -34,24 +34,6 @@ namespace System
         }
         
         #endregion
-
-        #region 本机信息        
-        private static DictionaryCache<Int32, IPAddress[]> _ips = new DictionaryCache<Int32, IPAddress[]> { Expire = 60, Asynchronous = true };
-        
-        #endregion
-     
-
-        #region IP地理位置
-        static IpProvider _IpProvider;
-                
-        /// <summary>IP地址提供者接口</summary>
-        public interface IpProvider
-        {
-            /// <summary>获取IP地址的物理地址位置</summary>
-            /// <param name="addr"></param>
-            /// <returns></returns>
-            String GetAddress(IPAddress addr);
-        }        
-        #endregion 
+             
     }
 }
