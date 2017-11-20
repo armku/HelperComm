@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 using NewLife.Collections;
 using NewLife.Model;
 using NewLife.Net;
-using NewLife.Http;
 #if !__MOBILE__ && !__CORE__
 using Microsoft.Win32;
 using System.Management;
