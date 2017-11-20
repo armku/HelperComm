@@ -166,12 +166,9 @@
     <Compile Include="Reflection\Reflect.cs" />
     <Compile Include="Reflection\OrcasNamer.cs" />
     <Compile Include="Reflection\ScriptEngine.cs" />
-    <Compile Include="Security\Certificate.cs" />
     <Compile Include="Security\Crc16.cs" />
-    <Compile Include="Security\DSAHelper.cs" />
     <Compile Include="Security\Rand.cs" />
     <Compile Include="Security\RC4.cs" />
-    <Compile Include="Security\RSAHelper.cs" />
     <Compile Include="Security\SecurityHelper.cs" />
     <Compile Include="Serialization\Binary\BinaryDictionary.cs" />
     <Compile Include="Serialization\Binary\BinaryNormal.cs" />
@@ -195,11 +192,6 @@
     <Compile Include="Reflection\AttributeX.cs" />
     <Compile Include="Reflection\EmitHelper.cs" />
     <Compile Include="Serialization\Json\IJsonHost.cs" />
-    <Compile Include="Serialization\Json\Json.cs" />
-    <Compile Include="Serialization\Json\JsonComposite.cs" />
-    <Compile Include="Serialization\Json\JsonDictionary.cs" />
-    <Compile Include="Serialization\Json\JsonGeneral.cs" />
-    <Compile Include="Serialization\Json\JsonArray.cs" />
     <Compile Include="Serialization\Json\IJson.cs" />
     <Compile Include="Serialization\Json\JsonParser.cs" />
     <Compile Include="Serialization\Json\JsonReader.cs" />
