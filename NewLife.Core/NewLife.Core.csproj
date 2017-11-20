@@ -104,10 +104,6 @@
     <Compile Include="Compression\ZipEntry.cs" />
     <Compile Include="Compression\ZipFile.cs" />
     <Compile Include="Configuration\CombConfig.cs" />
-    <Compile Include="Data\BinaryTree.cs" />
-    <Compile Include="Data\GeoArea.cs" />
-    <Compile Include="Data\GeoAddress.cs" />
-    <Compile Include="Data\GeoPoint.cs" />
     <Compile Include="Data\IFilter.cs" />
     <Compile Include="Data\Packet.cs" />
     <Compile Include="Extension\BitHelper.cs" />
@@ -258,7 +254,6 @@
     <Compile Include="Log\WriteLogEventArgs.cs" />
     <Compile Include="Log\XTrace.cs" />
     <Compile Include="Web\Modules\RunTimeModule.cs" />
-    <Compile Include="Data\PageParameter.cs" />
     <Compile Include="Web\PluginHelper.cs" />
     <Compile Include="Web\WebClientX.cs" />
     <Compile Include="Web\WebHelper.cs" />
