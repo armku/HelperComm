@@ -117,8 +117,6 @@
     <Compile Include="Net\IPacketQueue.cs" />
     <Compile Include="Net\IStatistics.cs" />
     <Compile Include="Net\ReceivedEventArgs.cs" />
-    <Compile Include="Net\ITransport.cs" />
-    <Compile Include="Net\SerialTransport.cs" />
     <Compile Include="Net\Setting.cs" />
     <Compile Include="Net\Statistics.cs" />
     <Compile Include="Extension\EnumHelper.cs" />
@@ -183,7 +181,6 @@
     <Compile Include="Threading\TimerScheduler.cs" />
     <Compile Include="Log\WriteLogEventArgs.cs" />
     <Compile Include="Log\XTrace.cs" />
-    <Compile Include="Net\SerialPortConfig.cs" />
     <Compile Include="Windows\ControlHelper.cs" />
     <Compile Include="Xml\SerializableDictionary.cs" />
     <Compile Include="Xml\XmlConfig.cs" />

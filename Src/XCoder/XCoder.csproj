@@ -64,12 +64,15 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\UIConfig.cs" />
+    <Compile Include="XCom\ITransport.cs" />
+    <Compile Include="XCom\SerialPortConfig.cs" />
     <Compile Include="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="XCom\SerialPortList.designer.cs">
       <DependentUpon>SerialPortList.cs</DependentUpon>
     </Compile>
+    <Compile Include="XCom\SerialTransport.cs" />
     <EmbeddedResource Include="FrmMDI.resx">
       <DependentUpon>FrmMDI.cs</DependentUpon>
     </EmbeddedResource>
