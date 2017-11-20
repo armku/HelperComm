@@ -111,10 +111,6 @@
     <Compile Include="Log\NetworkLog.cs" />
     <Compile Include="Log\TextControlLog.cs" />
     <Compile Include="Log\TimeCost.cs" />
-    <Compile Include="Expressions\IndexInfo.cs" />
-    <Compile Include="Expressions\UnionExpresion.cs" />
-    <Compile Include="Expressions\MathExpression.cs" />
-    <Compile Include="Expressions\RpnExpression.cs" />
     <Compile Include="Messaging\DefaultMessage.cs" />
     <Compile Include="Messaging\IMessage.cs">
       <SubType>Code</SubType>
@@ -161,7 +157,6 @@
     <Compile Include="Extension\StringHelper.cs" />
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Common\DisposeBase.cs" />
-    <Compile Include="Event\WeakAction.cs" />
     <Compile Include="Exceptions\XException.cs" />
     <Compile Include="IO\FileSource.cs" />
     <Compile Include="IO\IOHelper.cs" />
