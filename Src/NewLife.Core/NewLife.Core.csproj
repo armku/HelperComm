@@ -129,7 +129,6 @@
     <Compile Include="Net\Setting.cs" />
     <Compile Include="Net\SocketHelper.cs" />
     <Compile Include="Net\Statistics.cs" />
-    <Compile Include="Net\TcpSession.cs" />
     <Compile Include="Net\SessionBase.cs" />
     <Compile Include="Net\ISocketSession.cs" />
     <Compile Include="Extension\EnumHelper.cs" />
