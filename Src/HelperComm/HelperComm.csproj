@@ -56,6 +56,93 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Collections\CollectionHelper.cs" />
+    <Compile Include="Core\Collections\DictionaryCache.cs" />
+    <Compile Include="Core\Collections\NullableDictionary.cs" />
+    <Compile Include="Core\Collections\Pool.cs" />
+    <Compile Include="Core\Common\DisposeBase.cs" />
+    <Compile Include="Core\Common\Runtime.cs" />
+    <Compile Include="Core\Common\SysConfig.cs" />
+    <Compile Include="Core\Common\Utility.cs" />
+    <Compile Include="Core\Data\IFilter.cs" />
+    <Compile Include="Core\Data\Packet.cs" />
+    <Compile Include="Core\Event\EventArgs.cs" />
+    <Compile Include="Core\Exceptions\XException.cs" />
+    <Compile Include="Core\Extension\ConcurrentDictionaryExtensions.cs" />
+    <Compile Include="Core\Extension\EnumHelper.cs" />
+    <Compile Include="Core\Extension\ListExtension.cs" />
+    <Compile Include="Core\Extension\StringHelper.cs" />
+    <Compile Include="Core\IO\IOHelper.cs" />
+    <Compile Include="Core\IO\PathHelper.cs" />
+    <Compile Include="Core\Log\CompositeLog.cs" />
+    <Compile Include="Core\Log\ConsoleLog.cs" />
+    <Compile Include="Core\Log\ILog.cs" />
+    <Compile Include="Core\Log\Logger.cs" />
+    <Compile Include="Core\Log\LogLevel.cs" />
+    <Compile Include="Core\Log\TextControlLog.cs" />
+    <Compile Include="Core\Log\TextFileLog.cs" />
+    <Compile Include="Core\Log\TimeCost.cs" />
+    <Compile Include="Core\Log\TraceStream.cs" />
+    <Compile Include="Core\Log\WriteLogEventArgs.cs" />
+    <Compile Include="Core\Log\XTrace.cs" />
+    <Compile Include="Core\Messaging\DefaultMessage.cs" />
+    <Compile Include="Core\Messaging\IMessage.cs" />
+    <Compile Include="Core\Messaging\MessageBase.cs" />
+    <Compile Include="Core\Messaging\MessageEventArgs.cs" />
+    <Compile Include="Core\Model\IObjectContainer.cs" />
+    <Compile Include="Core\Model\IPlugin.cs" />
+    <Compile Include="Core\Model\IServer.cs" />
+    <Compile Include="Core\Model\ModelExtension.cs" />
+    <Compile Include="Core\Model\ObjectContainer.cs" />
+    <Compile Include="Core\Model\ObjectContainerHelper.cs" />
+    <Compile Include="Core\Reflection\AssemblyX.cs" />
+    <Compile Include="Core\Reflection\AttributeX.cs" />
+    <Compile Include="Core\Reflection\DynamicInternal.cs" />
+    <Compile Include="Core\Reflection\DynamicXml.cs" />
+    <Compile Include="Core\Reflection\EmitHelper.cs" />
+    <Compile Include="Core\Reflection\IIndexAccessor.cs" />
+    <Compile Include="Core\Reflection\IReflect.cs" />
+    <Compile Include="Core\Reflection\OrcasNamer.cs" />
+    <Compile Include="Core\Reflection\PEImage.cs" />
+    <Compile Include="Core\Reflection\Reflect.cs" />
+    <Compile Include="Core\Reflection\ScriptEngine.cs" />
+    <Compile Include="Core\Serialization\Binary\Binary.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryColor.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryComposite.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryDictionary.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryFont.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryGeneral.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryList.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryNormal.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryPair.cs" />
+    <Compile Include="Core\Serialization\Binary\BinaryUnknown.cs" />
+    <Compile Include="Core\Serialization\Binary\BitSizeAttribute.cs" />
+    <Compile Include="Core\Serialization\Binary\FieldSizeAttribute.cs" />
+    <Compile Include="Core\Serialization\Binary\IBinary.cs" />
+    <Compile Include="Core\Serialization\Interface\IAccessor.cs" />
+    <Compile Include="Core\Serialization\Interface\IFormatterX.cs" />
+    <Compile Include="Core\Serialization\Interface\IMemberAccessor.cs" />
+    <Compile Include="Core\Serialization\Json\IJson.cs" />
+    <Compile Include="Core\Serialization\Json\IJsonHost.cs" />
+    <Compile Include="Core\Serialization\Json\JsonParser.cs" />
+    <Compile Include="Core\Serialization\Json\JsonReader.cs" />
+    <Compile Include="Core\Serialization\Json\JsonWriter.cs" />
+    <Compile Include="Core\Serialization\Protocol.cs" />
+    <Compile Include="Core\Serialization\Xml\IXml.cs" />
+    <Compile Include="Core\Serialization\Xml\Xml.cs" />
+    <Compile Include="Core\Serialization\Xml\XmlComposite.cs" />
+    <Compile Include="Core\Serialization\Xml\XmlGeneral.cs" />
+    <Compile Include="Core\Serialization\Xml\XmlList.cs" />
+    <Compile Include="Core\Setting.cs" />
+    <Compile Include="Core\Threading\TaskHelper.cs" />
+    <Compile Include="Core\Threading\ThreadPoolX.cs" />
+    <Compile Include="Core\Threading\TimerScheduler.cs" />
+    <Compile Include="Core\Threading\TimerX.cs" />
+    <Compile Include="Core\Windows\ControlHelper.cs" />
+    <Compile Include="Core\Xml\SerializableDictionary.cs" />
+    <Compile Include="Core\Xml\XmlConfig.cs" />
+    <Compile Include="Core\Xml\XmlConfigFileAttribute.cs" />
+    <Compile Include="Core\Xml\XmlHelper.cs" />
     <Compile Include="FrmMDI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,12 +197,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NewLife.Core\NewLife.Core.csproj">
-      <Project>{5813C22E-EEB3-4DEE-A45C-BB218041193A}</Project>
-      <Name>NewLife.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XCom\FrmMain.resx">
