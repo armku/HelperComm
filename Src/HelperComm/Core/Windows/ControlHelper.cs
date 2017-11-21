@@ -26,19 +26,6 @@ namespace System.Windows.Forms
                 }
             }));
         }
-
-        ///// <summary>执行仅返回值委托</summary>
-        ///// <typeparam name="TResult"></typeparam>
-        ///// <param name="control"></param>
-        ///// <param name="method"></param>
-        ///// <returns></returns>
-        //public static TResult Invoke<TResult>(this Control control, Func<TResult> method)
-        //{
-        //    if (control.IsDisposed) return default(TResult);
-
-        //    return (TResult)control.Invoke(method);
-        //}
-
         /// <summary>执行单一参数无返回值的委托</summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="control"></param>
@@ -57,21 +44,6 @@ namespace System.Windows.Forms
                 }
             }));
         }
-
-        ///// <summary>执行单一参数和返回值的委托</summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <typeparam name="TResult"></typeparam>
-        ///// <param name="control"></param>
-        ///// <param name="method"></param>
-        ///// <param name="arg"></param>
-        ///// <returns></returns>
-        //public static TResult Invoke<T, TResult>(this Control control, Func<T, TResult> method, T arg)
-        //{
-        //    if (control.IsDisposed) return default(TResult);
-
-        //    return (TResult)control.Invoke(method, arg);
-        //}
-
         /// <summary>执行二参数无返回值的委托</summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="T2"></typeparam>
@@ -90,21 +62,7 @@ namespace System.Windows.Forms
                     method(arg, arg2);
                 }
             }));
-        }
-
-        ///// <summary>执行二参数和返回值的委托</summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <typeparam name="T2"></typeparam>
-        ///// <typeparam name="TResult"></typeparam>
-        ///// <param name="control"></param>
-        ///// <param name="method"></param>
-        ///// <param name="arg"></param>
-        ///// <param name="arg2"></param>
-        ///// <returns></returns>
-        //public static TResult Invoke<T, T2, TResult>(this Control control, Func<T, T2, TResult> method, T arg, T2 arg2)
-        //{
-        //    return (TResult)control.Invoke(method, arg, arg2);
-        //}
+        }        
         #endregion
 
         #region 文本控件扩展

@@ -36,9 +36,6 @@ namespace NewLife.Collections
         /// <summary>完全空闲清理时间。最小个数之下的资源超过空闲时间时被清理，默认0s永不清理</summary>
         public Int32 AllIdleTime { get; set; } = 0;
 
-        /// <summary>申请等待时间。池满时等待的时间，默认1000ms</summary>
-        public Int32 WaitTime { get; set; } = 1000;
-
         /// <summary>基础空闲集合。只保存最小个数，最热部分</summary>
         private ConcurrentStack<Item> _free = new ConcurrentStack<Item>();
 
@@ -50,17 +47,7 @@ namespace NewLife.Collections
         #endregion
 
         #region 构造
-        /// <summary>实例化一个资源池</summary>
-        public Pool()
-        {
-            var str = GetType().Name;
-            if (str.Contains("`")) str = str.Substring(null, "`");
-            if (str != "Pool")
-                Name = str;
-            else
-                Name = $"Pool<{typeof(T).Name}>";
-        }
-
+       
         /// <summary>销毁</summary>
         /// <param name="disposing"></param>
         protected override void OnDispose(Boolean disposing)
@@ -87,119 +74,10 @@ namespace NewLife.Collections
         #endregion
 
         #region 主方法
-        /// <summary>申请</summary>
-        /// <param name="msTimeout">池满时等待的最大超时时间。超时后仍无法得到资源将抛出异常</param>
-        /// <returns></returns>
-        public T Acquire(Int32 msTimeout = 0)
-        {
-            var pi = OnAcquire(msTimeout);
-            if (pi == null) return default;
-
-            return pi.Value;
-        }
-
-        /// <summary>申请资源包装项，Dispose时自动归还到池中</summary>
-        /// <param name="msTimeout">池满时等待的最大超时时间。超时后仍无法得到资源将抛出异常</param>
-        /// <returns></returns>
-        public PoolItem<T> AcquireItem(Int32 msTimeout = 0)
-        {
-            var pi = OnAcquire(msTimeout);
-            if (pi == null) return null;
-
-            return new PoolItem<T>(this, pi.Value);
-        }
+        
 
         private Boolean _inited;
-        /// <summary>申请</summary>
-        /// <param name="msTimeout">池满时等待的最大超时时间。超时后仍无法得到资源将抛出异常</param>
-        /// <returns></returns>
-        private Item OnAcquire(Int32 msTimeout = 0)
-        {
-            var sw = Log == null || Log == Logger.Null ? null : Stopwatch.StartNew();
-            Interlocked.Increment(ref _Total);
-
-            if (msTimeout <= 0) msTimeout = WaitTime;
-            var end = TimerX.Now.AddMilliseconds(msTimeout);
-
-            Item pi = null;
-            var flag = false;
-            while (true)
-            {
-                flag = false;
-                // 从空闲集合借一个
-                if (_free.TryPop(out pi) || _free2.TryDequeue(out pi))
-                {
-                    //FreeCount = _free.Count + _free2.Count;
-                    Interlocked.Decrement(ref _FreeCount);
-                    flag = true;
-                }
-                else
-                {
-                    // 超出最大值后，抛出异常
-                    //var count = _busy.Count;
-                    var count = BusyCount;
-                    if (count >= Max)
-                    {
-                        // 如果超时时间未到，等一会重试
-                        if (msTimeout > 0 && TimerX.Now < end)
-                        {
-                            Thread.Sleep(10);
-                            continue;
-                        }
-
-                        var msg = $"申请失败，已有 {count:n0} 达到或超过最大值 {Max:n0}";
-
-                        WriteLog("Acquire Max " + msg);
-
-                        throw new Exception(Name + " " + msg);
-                    }
-
-                    // 借不到，增加
-                    pi = new Item
-                    {
-                        Value = Create(),
-                    };
-
-                    if (count == 0 && !_inited)
-                    {
-                        _inited = true;
-                        WriteLog($"Init Min={Min} Max={Max} IdleTime={IdleTime}s AllIdleTime={AllIdleTime}s WaitTime={WaitTime}ms");
-                    }
-                    WriteLog("Acquire Create Free={0} Busy={1}", FreeCount, count + 1);
-                }
-
-                // 抛弃无效资源
-                if (OnAcquire(pi.Value)) break;
-            }
-
-            if (flag) Interlocked.Increment(ref _Success);
-
-            // 最后时间
-            pi.LastTime = TimerX.Now;
-
-            // 加入繁忙集合
-            _busy.TryAdd(pi.Value, pi);
-
-            //BusyCount = _busy.Count;
-            Interlocked.Increment(ref _BusyCount);
-
-#if DEBUG
-            //WriteLog("Acquire Free={0} Busy={1}", FreeCount, BusyCount);
-#endif
-            if (sw != null)
-            {
-                sw.Stop();
-                var ms = sw.Elapsed.TotalMilliseconds;
-
-                if (Cost < 0.001)
-                    Cost = ms;
-                else
-                    Cost = (Cost * 3 + ms) / 4;
-            }
-
-            return pi;
-        }
-
+        
         /// <summary>释放</summary>
         /// <param name="value"></param>
         public void Release(T value)
@@ -249,24 +127,7 @@ namespace NewLife.Collections
         #region 重载
         /// <summary>创建实例时触发。外部可用于自定义创建对象</summary>
         public event EventHandler<EventArgs<T>> OnCreate;
-
-        /// <summary>创建实例</summary>
-        /// <returns></returns>
-        protected virtual T Create()
-        {
-            if (OnCreate != null)
-            {
-                var e = new EventArgs<T>(default(T));
-                OnCreate(this, e);
-                if (e.Arg != null) return e.Arg;
-            }
-            return typeof(T).CreateInstance() as T;
-        }
-
-        /// <summary>申请时，返回是否有效。无效资源将会被抛弃并重新申请</summary>
-        /// <param name="value"></param>
-        protected virtual Boolean OnAcquire(T value) { return true; }
-
+                
         /// <summary>释放时，返回是否有效。无效资源将会被抛弃，不再加入空闲队列</summary>
         /// <param name="value"></param>
         protected virtual Boolean OnRelease(T value)
@@ -389,16 +250,7 @@ namespace NewLife.Collections
         public Pool<T> Pool { get; }
         #endregion
 
-        #region 构造
-        /// <summary>包装项</summary>
-        /// <param name="pool"></param>
-        /// <param name="value"></param>
-        public PoolItem(Pool<T> pool, T value)
-        {
-            Pool = pool;
-            Value = value;
-        }
-
+        #region 构造        
         /// <summary>销毁</summary>
         /// <param name="disposing"></param>
         protected override void OnDispose(Boolean disposing)

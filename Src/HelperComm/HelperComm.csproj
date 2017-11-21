@@ -96,7 +96,6 @@
     <Compile Include="Core\Model\IServer.cs" />
     <Compile Include="Core\Model\ModelExtension.cs" />
     <Compile Include="Core\Model\ObjectContainer.cs" />
-    <Compile Include="Core\Model\ObjectContainerHelper.cs" />
     <Compile Include="Core\Reflection\AssemblyX.cs" />
     <Compile Include="Core\Reflection\AttributeX.cs" />
     <Compile Include="Core\Reflection\DynamicInternal.cs" />
@@ -132,7 +131,6 @@
     <Compile Include="Core\Serialization\Xml\XmlList.cs" />
     <Compile Include="Core\Setting.cs" />
     <Compile Include="Core\Threading\TaskHelper.cs" />
-    <Compile Include="Core\Threading\ThreadPoolX.cs" />
     <Compile Include="Core\Threading\TimerScheduler.cs" />
     <Compile Include="Core\Threading\TimerX.cs" />
     <Compile Include="Core\Windows\ControlHelper.cs" />

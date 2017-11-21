@@ -22,17 +22,8 @@ namespace NewLife.Model
     /// 所以，配置注册的优先级最高
     /// </remarks>
     public class ObjectContainer : IObjectContainer
-    {
-        #region 当前静态对象容器
-        /// <summary>当前容器</summary>
-        public static IObjectContainer Current { get; set; } = new ObjectContainer();
-        #endregion
-
-        #region 构造函数
-        /// <summary>初始化一个对象容器实例，自动从配置文件中加载注册</summary>
-        public ObjectContainer() { }
-        #endregion
-
+    {       
+       
         #region 对象字典
         private ConcurrentDictionary<Type, IDictionary<String, IObjectMap>> Stores { get; } = new ConcurrentDictionary<Type, IDictionary<String, IObjectMap>>();
 

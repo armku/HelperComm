@@ -93,37 +93,7 @@ namespace NewLife.Collections
         #endregion
 
         #region 核心取值方法
-        /// <summary>重写索引器。取值时如果没有该项则返回默认值；赋值时如果已存在该项则覆盖，否则添加。</summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public TValue this[TKey key]
-        {
-            get
-            {
-                if (Items.TryGetValue(key, out var item) && (Expire <= 0 || !item.Expired)) return item.Value;
-
-                return default(TValue);
-            }
-            set
-            {
-                if (Items.TryGetValue(key, out var item))
-                {
-                    item.Value = value;
-                    //更新当前缓存项的过期时间
-                    item.ExpiredTime = TimerX.Now.AddSeconds(Expire);
-                }
-                else
-                {
-                    // 加锁，避免意外
-                    lock (Items)
-                    {
-                        Items[key] = new CacheItem(value, Expire);
-                    }
-                    StartTimer();
-                }
-            }
-        }
-
+        
         /// <summary>扩展获取数据项，当数据项不存在时，通过调用委托获取数据项。线程安全。</summary>
         /// <param name="key">键</param>
         /// <param name="func">获取值的委托，该委托以键作为参数</param>
@@ -170,41 +140,8 @@ namespace NewLife.Collections
                 return value;
             }
         }
-
-        /// <summary>移除指定缓存项</summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public virtual Boolean Remove(TKey key)
-        {
-            lock (Items)
-            {
-                return Items.Remove(key);
-            }
-        }
         #endregion
-
-        #region 辅助
-        /// <summary>缓存项</summary>
-        public Int32 Count { get { return Items.Count; } }
-
-        /// <summary>是否包含指定键</summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Boolean ContainsKey(TKey key) { return Items.ContainsKey(key); }
-
-        /// <summary>赋值到目标缓存</summary>
-        /// <param name="cache"></param>
-        public void CopyTo(DictionaryCache<TKey, TValue> cache)
-        {
-            if (Items.Count == 0) return;
-
-            foreach (var item in Items)
-            {
-                cache[item.Key] = item.Value.Value;
-            }
-        }
-        #endregion
-
+        
         #region 清理过期缓存
         /// <summary>清理会话计时器</summary>
         private TimerX clearTimer;
