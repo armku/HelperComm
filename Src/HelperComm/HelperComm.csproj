@@ -98,10 +98,8 @@
     <Compile Include="Core\Reflection\EmitHelper.cs" />
     <Compile Include="Core\Reflection\IIndexAccessor.cs" />
     <Compile Include="Core\Reflection\IReflect.cs" />
-    <Compile Include="Core\Reflection\OrcasNamer.cs" />
     <Compile Include="Core\Reflection\PEImage.cs" />
     <Compile Include="Core\Reflection\Reflect.cs" />
-    <Compile Include="Core\Reflection\ScriptEngine.cs" />
     <Compile Include="Core\Serialization\Binary\Binary.cs" />
     <Compile Include="Core\Serialization\Binary\BinaryColor.cs" />
     <Compile Include="Core\Serialization\Binary\BinaryComposite.cs" />
