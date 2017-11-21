@@ -124,11 +124,6 @@
     <Compile Include="Core\Serialization\Interface\IAccessor.cs" />
     <Compile Include="Core\Serialization\Interface\IFormatterX.cs" />
     <Compile Include="Core\Serialization\Interface\IMemberAccessor.cs" />
-    <Compile Include="Core\Serialization\Json\IJson.cs" />
-    <Compile Include="Core\Serialization\Json\IJsonHost.cs" />
-    <Compile Include="Core\Serialization\Json\JsonParser.cs" />
-    <Compile Include="Core\Serialization\Json\JsonReader.cs" />
-    <Compile Include="Core\Serialization\Json\JsonWriter.cs" />
     <Compile Include="Core\Serialization\Protocol.cs" />
     <Compile Include="Core\Serialization\Xml\IXml.cs" />
     <Compile Include="Core\Serialization\Xml\Xml.cs" />
