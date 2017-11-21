@@ -93,10 +93,6 @@
     <Compile Include="Core\Messaging\MessageEventArgs.cs" />
     <Compile Include="Core\Reflection\AssemblyX.cs" />
     <Compile Include="Core\Reflection\AttributeX.cs" />
-    <Compile Include="Core\Reflection\DynamicInternal.cs" />
-    <Compile Include="Core\Reflection\DynamicXml.cs" />
-    <Compile Include="Core\Reflection\EmitHelper.cs" />
-    <Compile Include="Core\Reflection\IIndexAccessor.cs" />
     <Compile Include="Core\Reflection\IReflect.cs" />
     <Compile Include="Core\Reflection\PEImage.cs" />
     <Compile Include="Core\Reflection\Reflect.cs" />
