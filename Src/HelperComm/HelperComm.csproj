@@ -87,10 +87,7 @@
     <Compile Include="Core\Log\TraceStream.cs" />
     <Compile Include="Core\Log\WriteLogEventArgs.cs" />
     <Compile Include="Core\Log\XTrace.cs" />
-    <Compile Include="Core\Messaging\DefaultMessage.cs" />
     <Compile Include="Core\Messaging\IMessage.cs" />
-    <Compile Include="Core\Messaging\MessageBase.cs" />
-    <Compile Include="Core\Messaging\MessageEventArgs.cs" />
     <Compile Include="Core\Reflection\AssemblyX.cs" />
     <Compile Include="Core\Reflection\AttributeX.cs" />
     <Compile Include="Core\Reflection\IReflect.cs" />
@@ -112,7 +109,6 @@
     <Compile Include="Core\Serialization\Interface\IAccessor.cs" />
     <Compile Include="Core\Serialization\Interface\IFormatterX.cs" />
     <Compile Include="Core\Serialization\Interface\IMemberAccessor.cs" />
-    <Compile Include="Core\Serialization\Protocol.cs" />
     <Compile Include="Core\Serialization\Xml\IXml.cs" />
     <Compile Include="Core\Serialization\Xml\Xml.cs" />
     <Compile Include="Core\Serialization\Xml\XmlComposite.cs" />
