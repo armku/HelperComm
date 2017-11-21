@@ -93,9 +93,6 @@
     <Compile Include="Core\Messaging\MessageEventArgs.cs" />
     <Compile Include="Core\Model\IObjectContainer.cs" />
     <Compile Include="Core\Model\IPlugin.cs" />
-    <Compile Include="Core\Model\IServer.cs" />
-    <Compile Include="Core\Model\ModelExtension.cs" />
-    <Compile Include="Core\Model\ObjectContainer.cs" />
     <Compile Include="Core\Reflection\AssemblyX.cs" />
     <Compile Include="Core\Reflection\AttributeX.cs" />
     <Compile Include="Core\Reflection\DynamicInternal.cs" />
