@@ -110,7 +110,10 @@ namespace XCom
         {
             var line = e.Value;
             //TextControlLog.WriteLog(txtReceive, line);
-
+            if(txtReceive.Lines.Length>1000)
+            {
+                txtReceive.Clear();
+            }
             BizLog?.Info(line);
         }
 
