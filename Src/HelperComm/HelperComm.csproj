@@ -78,9 +78,7 @@
     <Compile Include="Core\IO\PathHelper.cs" />
     <Compile Include="Core\Log\CompositeLog.cs" />
     <Compile Include="Core\Log\ConsoleLog.cs" />
-    <Compile Include="Core\Log\ILog.cs" />
     <Compile Include="Core\Log\Logger.cs" />
-    <Compile Include="Core\Log\LogLevel.cs" />
     <Compile Include="Core\Log\TextControlLog.cs" />
     <Compile Include="Core\Log\TextFileLog.cs" />
     <Compile Include="Core\Log\TimeCost.cs" />
@@ -182,6 +180,16 @@
     <EmbeddedResource Include="XCom\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Log\Core.Log.csproj">
+      <Project>{dc99abb2-98ea-477d-aa9f-85205aacfc4f}</Project>
+      <Name>Core.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.XML\Core.XML.csproj">
+      <Project>{503f2b55-6473-4835-9ddb-1cbad85cccb2}</Project>
+      <Name>Core.XML</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
