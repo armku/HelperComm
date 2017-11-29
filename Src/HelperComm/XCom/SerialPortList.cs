@@ -548,13 +548,6 @@ namespace NewLife.Windows
     {
         private Byte[] _Value;
         /// <summary>缓冲区数据</summary>
-        public Byte[] Value { get { return _Value; } set { _Value = value; } }
-
-        //public static Boolean Invoke(EventHandler<BufferEventArgs> handler, Object sender, Byte[] buf)
-        //{
-        //    var e = new BufferEventArgs { Value = buf, Cancel = false };
-        //    handler(sender, e);
-        //    return e.Cancel;
-        //}
+        public Byte[] Value { get { return _Value; } set { _Value = value; } }        
     }
 }
