@@ -55,7 +55,7 @@
             // numMutilSend
             // 
             this.numMutilSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numMutilSend.Location = new System.Drawing.Point(436, 22);
+            this.numMutilSend.Location = new System.Drawing.Point(463, 22);
             this.numMutilSend.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -79,7 +79,7 @@
             this.gbReceive.Controls.Add(this.txtReceive);
             this.gbReceive.Location = new System.Drawing.Point(9, 43);
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Size = new System.Drawing.Size(550, 241);
+            this.gbReceive.Size = new System.Drawing.Size(577, 241);
             this.gbReceive.TabIndex = 4;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "接收区：已接收0字节";
@@ -90,7 +90,7 @@
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(3, 17);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(544, 221);
+            this.txtReceive.Size = new System.Drawing.Size(571, 221);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -106,7 +106,7 @@
             this.gbSend.Controls.Add(this.label7);
             this.gbSend.Location = new System.Drawing.Point(9, 290);
             this.gbSend.Name = "gbSend";
-            this.gbSend.Size = new System.Drawing.Size(550, 84);
+            this.gbSend.Size = new System.Drawing.Size(577, 84);
             this.gbSend.TabIndex = 5;
             this.gbSend.TabStop = false;
             this.gbSend.Text = "发送区：已发送0字节";
@@ -114,7 +114,7 @@
             // numSleep
             // 
             this.numSleep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numSleep.Location = new System.Drawing.Point(436, 49);
+            this.numSleep.Location = new System.Drawing.Point(463, 49);
             this.numSleep.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -139,7 +139,7 @@
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(0, 19);
             this.txtSend.Name = "txtSend";
-            this.txtSend.Size = new System.Drawing.Size(395, 59);
+            this.txtSend.Size = new System.Drawing.Size(422, 59);
             this.txtSend.TabIndex = 2;
             this.txtSend.Text = "";
             // 
@@ -160,7 +160,7 @@
             // btnSend
             // 
             this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(494, 18);
+            this.btnSend.Location = new System.Drawing.Point(521, 18);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(50, 61);
             this.btnSend.TabIndex = 1;
@@ -172,7 +172,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(401, 53);
+            this.label1.Location = new System.Drawing.Point(428, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 17;
@@ -182,7 +182,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(401, 26);
+            this.label7.Location = new System.Drawing.Point(428, 26);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 15;
@@ -211,7 +211,7 @@
             this.spList.Location = new System.Drawing.Point(12, 8);
             this.spList.Name = "spList";
             this.spList.Port = null;
-            this.spList.SelectedPort = "COM1(Serial0)";
+            this.spList.SelectedPort = "COM256(Serial0)";
             this.spList.Size = new System.Drawing.Size(415, 29);
             this.spList.TabIndex = 6;
             this.spList.ReceivedString += new System.EventHandler<NewLife.Windows.StringEventArgs>(this.OnReceived);
@@ -220,7 +220,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 386);
+            this.ClientSize = new System.Drawing.Size(592, 386);
             this.Controls.Add(this.spList);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.btnConnect);
