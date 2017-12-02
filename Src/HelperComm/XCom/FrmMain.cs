@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using NewLife.Log;
 using NewLife.Windows;
 using XCoder;
+using NewLife.Net;
 
 namespace XCom
 {
@@ -52,6 +53,9 @@ namespace XCom
             menu.Items.Insert(2, ti);
             ti.Click += miCheck_Click;
             ti.Checked = XConfig.Current.ColorLog;
+
+            txtSend.Text = SerialPortConfig.Current.StrSend;
+            //加载端口号
         }
         #endregion
 
@@ -160,7 +164,8 @@ namespace XCom
                 txtSend.Focus();
                 return;
             }
-
+            SerialPortConfig.Current.StrSend = str;
+            SerialPortConfig.Current.Save();
             // 多次发送
             var count = (Int32)numMutilSend.Value;
             var sleep = (Int32)numSleep.Value;

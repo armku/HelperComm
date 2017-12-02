@@ -60,5 +60,10 @@ namespace NewLife.Net
         /// <summary>扩展数据</summary>
         [Description("扩展数据")]
         public String Extend { get; set; } = "";
+        /// <summary>
+        /// 发送区内容
+        /// </summary>
+        [Description("发送区内容")]
+        public String StrSend { get; set; } = "";
     }
 }
