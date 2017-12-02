@@ -150,7 +150,6 @@
       <DependentUpon>SerialPortList.cs</DependentUpon>
     </Compile>
     <Compile Include="XCom\SerialTransport.cs" />
-    <Compile Include="XCom\Setting.cs" />
     <EmbeddedResource Include="FrmMDI.resx">
       <DependentUpon>FrmMDI.cs</DependentUpon>
     </EmbeddedResource>

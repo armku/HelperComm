@@ -102,8 +102,8 @@ namespace NewLife.Net
                 }
             }
 
-            if (Setting.Current.Debug)
-                XTrace.WriteLine("PacketQueue.CheckMatch 失败 [{0}] remote={1} Items={2}", response.Count, remote, arr.Length);
+            //if (Setting.Current.Debug)
+            //    XTrace.WriteLine("PacketQueue.CheckMatch 失败 [{0}] remote={1} Items={2}", response.Count, remote, arr.Length);
 
             return false;
         }
