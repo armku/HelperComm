@@ -23,13 +23,6 @@ namespace System
         /// <returns></returns>
         public static Int32 ToInt(this Object value, Int32 defaultValue = 0) { return Convert.ToInt(value, defaultValue); }
 
-        /// <summary>转为长整数，转换失败时返回默认值。支持字符串、全角、字节数组（小端）</summary>
-        /// <remarks></remarks>
-        /// <param name="value">待转换对象</param>
-        /// <param name="defaultValue">默认值。待转换对象无效时使用</param>
-        /// <returns></returns>
-        public static Int64 ToLong(this Object value, Int64 defaultValue = 0) { return Convert.ToLong(value, defaultValue); }
-
         /// <summary>转为浮点数，转换失败时返回默认值。支持字符串、全角、字节数组（小端）</summary>
         /// <remarks>Single可以先转为最常用的Double后再二次处理</remarks>
         /// <param name="value">待转换对象</param>
@@ -112,35 +105,7 @@ namespace System
             }
             catch { return defaultValue; }
         }
-
-        /// <summary>转为长整数</summary>
-        /// <param name="value">待转换对象</param>
-        /// <param name="defaultValue">默认值。待转换对象无效时使用</param>
-        /// <returns></returns>
-        public virtual Int64 ToLong(Object value, Int64 defaultValue)
-        {
-            if (value == null || value == DBNull.Value) return defaultValue;
-
-            // 特殊处理字符串，也是最常见的
-            if (value is String str)
-            {
-                // 拷贝而来的逗号分隔整数
-                str = str.Replace(",", null);
-                str = ToDBC(str).Trim();
-                if (str.IsNullOrEmpty()) return defaultValue;
-
-                if (Int64.TryParse(str, out var n)) return n;
-                return defaultValue;
-            }
-
-            //暂时不做处理  先处理异常转换
-            try
-            {
-                return Convert.ToInt64(value);
-            }
-            catch { return defaultValue; }
-        }
-
+        
         /// <summary>转为浮点数</summary>
         /// <param name="value">待转换对象</param>
         /// <param name="defaultValue">默认值。待转换对象无效时使用</param>
@@ -340,24 +305,7 @@ namespace System
             k++;
 
             return new String(cs);
-        }
-
-        /// <summary>时间日期转为指定格式字符串</summary>
-        /// <param name="value">待转换对象</param>
-        /// <param name="format">格式化字符串</param>
-        /// <param name="emptyValue">字符串空值时显示的字符串，null表示原样显示最小时间，String.Empty表示不显示</param>
-        /// <returns></returns>
-        public virtual String ToString(DateTime value, String format, String emptyValue)
-        {
-            if (emptyValue != null && value <= DateTime.MinValue) return emptyValue;
-
-            //return value.ToString(format ?? "yyyy-MM-dd HH:mm:ss");
-
-            if (format == null || format == "yyyy-MM-dd HH:mm:ss") return ToFullString(value, emptyValue);
-
-            return value.ToString(format);
-        }
-
+        }        
         /// <summary>获取内部真实异常</summary>
         /// <param name="ex"></param>
         /// <returns></returns>
