@@ -33,17 +33,6 @@ namespace NewLife.Data
         public Packet(Byte[] data, Int32 offset = 0, Int32 count = -1) { Set(data, offset, count); }
         #endregion
 
-        #region 索引
-        /// <summary>获取/设置 指定位置的字节</summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public Byte this[Int32 index]
-        {
-            get { return Data[Offset + index]; }
-            set { Data[Offset + index] = value; }
-        }
-        #endregion
-
         #region 方法
         /// <summary>设置新的数据区</summary>
         /// <param name="data"></param>
@@ -65,59 +54,7 @@ namespace NewLife.Data
                 if (count < 0) count = data.Length - offset;
                 Count = count;
             }
-        }
-
-        /// <summary>截取</summary>
-        /// <param name="offset"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        public Packet Sub(Int32 offset, Int32 count = -1)
-        {
-            // count 是 offset 之后的个数
-            if (count < 0 || offset + count > Count) count = Count - offset;
-            if (count < 0) count = 0;
-
-            return new Packet(Data, Offset + offset, count);
-        }
-
-        /// <summary>查找目标数组</summary>
-        /// <param name="data">目标数组</param>
-        /// <param name="offset">本数组起始偏移</param>
-        /// <param name="count">本数组搜索个数</param>
-        /// <returns></returns>
-        public Int32 IndexOf(Byte[] data, Int32 offset = 0, Int32 count = -1)
-        {
-            //return (Int32)IOHelper.IndexOf(Data, Offset, Count, data, offset, count);
-
-            var start = Offset + offset;
-            var length = data.Length;
-
-            if (count < 0 || count > Count - offset) count = Count - offset;
-
-            // 已匹配字节数
-            var win = 0;
-            // 索引加上data剩余字节数必须小于count
-            for (var i = 0; i + length - win < count; i++)
-            {
-                if (Data[start + i] == data[win])
-                {
-                    win++;
-
-                    // 全部匹配，退出
-                    if (win >= length) return (start + i - Offset) - length + 1;
-                }
-                else
-                {
-                    //win = 0; // 只要有一个不匹配，马上清零
-                    // 不能直接清零，那样会导致数据丢失，需要逐位探测，窗口一个个字节滑动
-                    i = i - win;
-                    win = 0;
-                }
-            }
-
-            return -1;
-        }
-
+        }        
         /// <summary>返回字节数组。如果是完整数组直接返回，否则截取</summary>
         /// <remarks>不一定是全新数据，如果需要全新数据请克隆</remarks>
         /// <returns></returns>
@@ -221,29 +158,7 @@ namespace NewLife.Data
         {
             await stream.WriteAsync(Data, Offset, Count);
             if (Next != null) await Next.CopyToAsync(stream);
-        }
-
-        /// <summary>深度克隆一份数据包，拷贝数据区</summary>
-        /// <returns></returns>
-        public Packet Clone()
-        {
-            if (Next == null) return new Packet(Data.ReadBytes(Offset, Count));
-
-            return new Packet(ToArray());
-        }
-
-        /// <summary>以字符串表示</summary>
-        /// <param name="encoding">字符串编码，默认URF-8</param>
-        /// <returns></returns>
-        public String ToStr(Encoding encoding = null)
-        {
-            if (Data == null) return null;
-            //if (Count == 0) return String.Empty;
-
-            if (Next == null) return Data.ToStr(encoding ?? Encoding.UTF8, Offset, Count);
-
-            return ToArray().ToStr(encoding ?? Encoding.UTF8);
-        }
+        }        
 
         /// <summary>以十六进制编码表示</summary>
         /// <param name="maxLength">最大显示多少个字节。默认-1显示全部</param>

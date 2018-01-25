@@ -334,18 +334,7 @@ namespace NewLife
                 return _AvailableMemory.Value;
             }
         }
-
-        //private static Int32? _VirtualMemory;
-        ///// <summary>虚拟内存大小。单位MB</summary>
-        //public static Int32 VirtualMemory
-        //{
-        //    get
-        //    {
-        //        if (_VirtualMemory == null) Refresh();
-        //        return _VirtualMemory.Value;
-        //    }
-        //}
-
+        
         private static void Refresh()
         {
             if (Mono) return;
