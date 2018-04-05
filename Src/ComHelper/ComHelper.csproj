@@ -50,6 +50,7 @@
     <Compile Include="ComHelper\Data\IFilter.cs" />
     <Compile Include="ComHelper\Data\Packet.cs" />
     <Compile Include="ComHelper\Log\ILog.cs" />
+    <Compile Include="ComHelper\Log\Logger.cs" />
     <Compile Include="ComHelper\Log\LogLevel.cs" />
     <Compile Include="ComHelper\Net\IPacket.cs" />
     <Compile Include="ComHelper\Net\IPacketQueue.cs" />
