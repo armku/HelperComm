@@ -48,6 +48,7 @@
             this.numMutilSend = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnRcvClear = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.gbReceive.SuspendLayout();
             this.gbSend.SuspendLayout();
@@ -136,7 +137,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(456, 7);
+            this.btnConnect.Location = new System.Drawing.Point(408, 4);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(67, 29);
             this.btnConnect.TabIndex = 12;
@@ -210,6 +211,8 @@
             this.txtSend.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSend.BackColor = System.Drawing.SystemColors.WindowText;
+            this.txtSend.ForeColor = System.Drawing.SystemColors.Window;
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(0, 19);
             this.txtSend.Name = "txtSend";
@@ -266,11 +269,22 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "次数：";
             // 
+            // btnRcvClear
+            // 
+            this.btnRcvClear.Location = new System.Drawing.Point(493, 4);
+            this.btnRcvClear.Name = "btnRcvClear";
+            this.btnRcvClear.Size = new System.Drawing.Size(67, 29);
+            this.btnRcvClear.TabIndex = 15;
+            this.btnRcvClear.Text = "清理";
+            this.btnRcvClear.UseVisualStyleBackColor = true;
+            this.btnRcvClear.Click += new System.EventHandler(this.btnRcvClear_Click);
+            // 
             // FormComHelper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 386);
+            this.Controls.Add(this.btnRcvClear);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.gbReceive);
             this.Controls.Add(this.btnConnect);
@@ -316,6 +330,7 @@
         private System.Windows.Forms.NumericUpDown numMutilSend;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnRcvClear;
     }
 }
 

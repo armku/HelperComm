@@ -165,5 +165,10 @@ namespace ComHelper
             btnConnect.Text = "打开";
             sp.Close();
         }
+
+        private void btnRcvClear_Click(object sender, EventArgs e)
+        {
+            txtReceive.Text = "";
+        }
     }
 }
