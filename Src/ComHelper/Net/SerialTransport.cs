@@ -34,7 +34,7 @@ namespace ComHelper.Net
     /// }
     /// </code>
     /// </example>
-    public class SerialTransport 
+    public class SerialTransport :ITransport
     {
         #region 属性
         private SerialPort _Serial;

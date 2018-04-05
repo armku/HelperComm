@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Net\ITransport.cs" />
     <Compile Include="Net\SerialTransport.cs" />
     <Compile Include="UI\ControlHelper.cs" />
     <Compile Include="UI\FormComHelper.cs">
