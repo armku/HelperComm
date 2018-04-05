@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Net\IPacket.cs" />
+    <Compile Include="Net\IPacketQueue.cs" />
     <Compile Include="Net\ITransport.cs" />
     <Compile Include="Net\SerialTransport.cs" />
     <Compile Include="UI\ControlHelper.cs" />
