@@ -15,5 +15,13 @@ namespace ComHelper
         {
             InitializeComponent();
         }
+
+        private void FormComHelper_Load(object sender, EventArgs e)
+        {
+            var bs = new List<Int32>(new Int32[] { 1200, 2400, 4800, 9600, 14400, 19200, 38400, 56000, 57600, 115200, 128000, 194000, 256000, 512000, 1024000, 2048000 });
+            cbBaundrate.DataSource = bs;
+
+
+        }
     }
 }

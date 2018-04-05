@@ -263,7 +263,7 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "次数：";
             // 
-            // Form1
+            // FormComHelper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -276,9 +276,10 @@
             this.Controls.Add(this.cbName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "Form1";
+            this.Name = "FormComHelper";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "串口助手";
+            this.Load += new System.EventHandler(this.FormComHelper_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.gbReceive.ResumeLayout(false);
