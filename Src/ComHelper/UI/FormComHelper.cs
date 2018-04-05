@@ -33,11 +33,11 @@ namespace ComHelper
 
                 var count = sp.Read(buf, 0, buf.Length);
                 var str = Encoding.Default.GetString(buf,0,count);
-                txtReceive.Text += str;
+                txtReceive.Text += str;                
             }
 
-            if (txtReceive.Text.Length > 10000)
-                txtReceive.Text = "";
+            if (txtReceive.Lines.Length > 1000)
+                txtReceive.Clear();
         }
 
         public void LoadInfo()
@@ -168,7 +168,7 @@ namespace ComHelper
 
         private void btnRcvClear_Click(object sender, EventArgs e)
         {
-            txtReceive.Text = "";
+            txtReceive.Clear();
         }
     }
 }
