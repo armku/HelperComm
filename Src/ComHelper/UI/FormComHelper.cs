@@ -26,7 +26,7 @@ namespace ComHelper
         }
 
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
+        {            
             if (sp.BytesToRead > 0)
             {
                 var buf = new Byte[sp.BytesToRead];
@@ -38,6 +38,8 @@ namespace ComHelper
 
             if (txtReceive.Lines.Length > 1000)
                 txtReceive.Clear();
+            txtReceive.Select(txtReceive.TextLength, 0);
+            txtReceive.ScrollToCaret();
         }
 
         public void LoadInfo()
