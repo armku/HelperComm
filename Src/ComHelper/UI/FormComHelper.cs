@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace ComHelper
 {
-    public partial class Form1 : Form
+    public partial class FormComHelper : Form
     {
-        public Form1()
+        public FormComHelper()
         {
             InitializeComponent();
         }
