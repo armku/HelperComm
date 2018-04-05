@@ -172,5 +172,30 @@ namespace ComHelper
         {
             txtReceive.Clear();
         }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            var str = txtSend.Text;
+            if (String.IsNullOrEmpty(str))
+            {
+                MessageBox.Show("发送内容不能为空！", Text);
+                txtSend.Focus();
+                return;
+            }
+            // 多次发送
+            var count = (Int32)numMutilSend.Value;
+            var sleep = (Int32)numSleep.Value;
+            if (count <= 0) count = 1;
+            if (sleep <= 0) sleep = 100;
+
+            // 处理换行
+            str = str.Replace("\n", "\r\n");
+
+            if (count == 1)
+            {
+                sp.Write(str);
+                return;
+            }
+        }
     }
 }
