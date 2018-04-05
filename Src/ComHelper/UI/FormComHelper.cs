@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace ComHelper
 {
     public partial class FormComHelper : Form
     {
+        SerialPort sp = new SerialPort();
         public FormComHelper()
         {
             InitializeComponent();
@@ -20,7 +22,16 @@ namespace ComHelper
         private void FormComHelper_Load(object sender, EventArgs e)
         {
             LoadInfo();
+            sp.DataReceived += Sp_DataReceived;
         }
+
+        private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            txtReceive.Text += e.ToString();
+            if (txtReceive.Text.Length > 1000)
+                txtReceive.Text = "";
+        }
+
         public void LoadInfo()
         {
             ShowPorts();
@@ -130,6 +141,9 @@ namespace ComHelper
             var p = name.IndexOf("(");
             if (p > 0) name = name.Substring(0, p);
             btnConnect.Text = "关闭";
+            sp.PortName = name;
+            sp.BaudRate = 256000;
+            sp.Open();
         }
         void Disconnect()
         {
@@ -141,6 +155,7 @@ namespace ComHelper
             //spList.Disconnect();
 
             btnConnect.Text = "打开";
+            sp.Close();
         }
     }
 }
