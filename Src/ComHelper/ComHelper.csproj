@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\ControlHelper.cs" />
     <Compile Include="UI\FormComHelper.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -51,6 +52,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\StringHelper.cs" />
+    <Compile Include="UI\Utility.cs" />
     <EmbeddedResource Include="UI\FormComHelper.resx">
       <DependentUpon>FormComHelper.cs</DependentUpon>
     </EmbeddedResource>
