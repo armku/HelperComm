@@ -35,8 +35,8 @@ namespace ComHelper
                 var str = Encoding.Default.GetString(buf,0,count);
                 txtReceive.Text += str;
             }
-            
-            if (txtReceive.Text.Length > 1000)
+
+            if (txtReceive.Text.Length > 10000)
                 txtReceive.Text = "";
         }
 
