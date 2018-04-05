@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComHelper.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -30,7 +31,7 @@ namespace ComHelper.Net
     public class DefaultPacketQueue : IPacketQueue
     {
         private LinkedList<Item> Items = new LinkedList<Item>();
-        private TimerX _Timer;
+        //private TimerX _Timer;
 
         /// <summary>加入请求队列</summary>
         /// <param name="owner">拥有者</param>

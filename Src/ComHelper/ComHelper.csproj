@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Net\IPacket.cs" />
-    <Compile Include="Net\IPacketQueue.cs" />
-    <Compile Include="Net\ITransport.cs" />
-    <Compile Include="Net\SerialTransport.cs" />
+    <Compile Include="ComHelper\Core\IOHelper.cs" />
+    <Compile Include="ComHelper\Data\IFilter.cs" />
+    <Compile Include="ComHelper\Data\Packet.cs" />
+    <Compile Include="ComHelper\Net\IPacket.cs" />
+    <Compile Include="ComHelper\Net\IPacketQueue.cs" />
+    <Compile Include="ComHelper\Net\ITransport.cs" />
+    <Compile Include="ComHelper\Net\SerialTransport.cs" />
     <Compile Include="UI\ControlHelper.cs" />
     <Compile Include="UI\FormComHelper.cs">
       <SubType>Form</SubType>
@@ -80,5 +83,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
