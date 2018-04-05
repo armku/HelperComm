@@ -5,7 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 
-namespace ComHelper.Core
+namespace System
 {
     /// <summary>IO工具类</summary>
     public static class IOHelper

@@ -93,7 +93,7 @@ namespace ComHelper.Net
                     }
 
                     // 异步设置完成结果，否则可能会在当前线程恢复上层await，导致堵塞当前任务
-                    if (!qi.Source.Task.IsCompleted) Task.Run(() => qi.Source.SetResult(response));
+                    //if (!qi.Source.Task.IsCompleted) Task.Run(() => qi.Source.SetResult(response));
 
                     return true;
                 }
