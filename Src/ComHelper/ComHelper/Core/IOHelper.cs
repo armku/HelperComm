@@ -61,121 +61,121 @@ namespace System
         /// <param name="bufferSize">缓冲区大小，也就是每次复制的大小</param>
         /// <param name="max">最大复制字节数</param>
         /// <returns>返回复制的总字节数</returns>
-        public static Int32 CopyTo(this Stream src, Stream des, Int32 bufferSize = 0, Int32 max = 0)
-        {
-            // 优化处理内存流，直接拿源内存流缓冲区往目标数据流里写
-            if (src is MemoryStream)
-            {
-                var ms = src as MemoryStream;
-                // 如果指针位于开头，并且要读完整个缓冲区，则直接使用WriteTo
-                var count = (Int32)(ms.Length - ms.Position);
-                if (ms.Position == 0 && (max <= 0 || count <= max))
-                {
-                    ms.WriteTo(des);
-                    ms.Position = ms.Length;
-                    return count;
-                }
+//        public static Int32 CopyTo(this Stream src, Stream des, Int32 bufferSize = 0, Int32 max = 0)
+//        {
+//            // 优化处理内存流，直接拿源内存流缓冲区往目标数据流里写
+//            if (src is MemoryStream)
+//            {
+//                var ms = src as MemoryStream;
+//                // 如果指针位于开头，并且要读完整个缓冲区，则直接使用WriteTo
+//                var count = (Int32)(ms.Length - ms.Position);
+//                if (ms.Position == 0 && (max <= 0 || count <= max))
+//                {
+//                    ms.WriteTo(des);
+//                    ms.Position = ms.Length;
+//                    return count;
+//                }
 
-                // 反射读取内存流中数据的原始位置，然后直接把数据拿出来用
-                Object obj = 0;
-                if (ms.TryGetValue("_origin", out obj))
-                {
-                    var _origin = (Int32)obj;
-                    // 其实地址不为0时，一般不能直接访问缓冲区，因为可能被限制访问
-                    var buf = ms.GetValue("_buffer") as Byte[];
+//                // 反射读取内存流中数据的原始位置，然后直接把数据拿出来用
+//                Object obj = 0;
+//                if (ms.TryGetValue("_origin", out obj))
+//                {
+//                    var _origin = (Int32)obj;
+//                    // 其实地址不为0时，一般不能直接访问缓冲区，因为可能被限制访问
+//                    var buf = ms.GetValue("_buffer") as Byte[];
 
-                    if (max > 0 && count > max) count = max;
-                    des.Write(buf, _origin, count);
-                    ms.Position += count;
-                    return count;
-                }
+//                    if (max > 0 && count > max) count = max;
+//                    des.Write(buf, _origin, count);
+//                    ms.Position += count;
+//                    return count;
+//                }
 
-                // 一次读完
-                bufferSize = count;
-            }
-            // 优化处理目标内存流，直接拿目标内存流缓冲区去源数据流里面读取数据
-            if (des is MemoryStream)
-            {
-                var ms = des as MemoryStream;
-                // 
-                Object obj = 0;
-                if (ms.TryGetValue("_origin", out obj))
-                {
-                    var _origin = (Int32)obj;
-                    // 缓冲区还剩下多少空间
-                    var count = (Int32)(ms.Length - ms.Position);
-                    // 有可能是全新的内存流
-                    if (count == 0)
-                    {
-                        if (max > 0)
-                            count = max;
-                        else if (src.CanSeek)
-                        {
-                            try { count = (Int32)(src.Length - src.Position); }
-                            catch { count = 256; }
-                        }
-                        else
-                            count = 256;
-                        ms.Capacity += count;
-                    }
-                    else if (max > 0 && count > max)
-                        count = max;
+//                // 一次读完
+//                bufferSize = count;
+//            }
+//            // 优化处理目标内存流，直接拿目标内存流缓冲区去源数据流里面读取数据
+//            if (des is MemoryStream)
+//            {
+//                var ms = des as MemoryStream;
+//                // 
+//                Object obj = 0;
+//                if (ms.TryGetValue("_origin", out obj))
+//                {
+//                    var _origin = (Int32)obj;
+//                    // 缓冲区还剩下多少空间
+//                    var count = (Int32)(ms.Length - ms.Position);
+//                    // 有可能是全新的内存流
+//                    if (count == 0)
+//                    {
+//                        if (max > 0)
+//                            count = max;
+//                        else if (src.CanSeek)
+//                        {
+//                            try { count = (Int32)(src.Length - src.Position); }
+//                            catch { count = 256; }
+//                        }
+//                        else
+//                            count = 256;
+//                        ms.Capacity += count;
+//                    }
+//                    else if (max > 0 && count > max)
+//                        count = max;
 
-                    // 其实地址不为0时，一般不能直接访问缓冲区，因为可能被限制访问
-                    var buf = ms.GetValue("_buffer") as Byte[];
+//                    // 其实地址不为0时，一般不能直接访问缓冲区，因为可能被限制访问
+//                    var buf = ms.GetValue("_buffer") as Byte[];
 
-                    // 先把长度设为较大值，为后面设定长度做准备，因为直接使用SetLength会清空缓冲区
-                    var len = ms.Length;
-                    ms.SetLength(ms.Position + count);
-                    // 直接从源数据流往这个缓冲区填充数据
-                    var rs = src.Read(buf, _origin, count);
-                    if (rs > 0)
-                    {
-                        // 直接使用SetLength会清空缓冲区
-                        ms.SetLength(ms.Position + rs);
-                        ms.Position += rs;
-                    }
-                    else
-                        ms.SetLength(len);
-                    // 如果得到的数据没有达到预期，说明读完了
-                    if (rs < count) return rs;
-                    // 如果相等，则只有特殊情况才是达到预期
-                    if (rs == count)
-                    {
-                        if (count != max && count != 256) return rs;
-                    }
+//                    // 先把长度设为较大值，为后面设定长度做准备，因为直接使用SetLength会清空缓冲区
+//                    var len = ms.Length;
+//                    ms.SetLength(ms.Position + count);
+//                    // 直接从源数据流往这个缓冲区填充数据
+//                    var rs = src.Read(buf, _origin, count);
+//                    if (rs > 0)
+//                    {
+//                        // 直接使用SetLength会清空缓冲区
+//                        ms.SetLength(ms.Position + rs);
+//                        ms.Position += rs;
+//                    }
+//                    else
+//                        ms.SetLength(len);
+//                    // 如果得到的数据没有达到预期，说明读完了
+//                    if (rs < count) return rs;
+//                    // 如果相等，则只有特殊情况才是达到预期
+//                    if (rs == count)
+//                    {
+//                        if (count != max && count != 256) return rs;
+//                    }
 
-                    // 如果还有数据，说明是目标数据流缓冲区不够大
-#if DEBUG
-                   // NewLife.Log.XTrace.WriteLine("目标数据流缓冲区不够大，设计上建议加大（>{0}）以提升性能！", count);
-#endif
-                }
-            }
+//                    // 如果还有数据，说明是目标数据流缓冲区不够大
+//#if DEBUG
+//                   // NewLife.Log.XTrace.WriteLine("目标数据流缓冲区不够大，设计上建议加大（>{0}）以提升性能！", count);
+//#endif
+//                }
+//            }
 
-            if (bufferSize <= 0) bufferSize = 1024;
-            var buffer = new Byte[bufferSize];
+//            if (bufferSize <= 0) bufferSize = 1024;
+//            var buffer = new Byte[bufferSize];
 
-            var total = 0;
-            while (true)
-            {
-                var count = bufferSize;
-                if (max > 0)
-                {
-                    if (total >= max) break;
+//            var total = 0;
+//            while (true)
+//            {
+//                var count = bufferSize;
+//                if (max > 0)
+//                {
+//                    if (total >= max) break;
 
-                    // 最后一次读取大小不同
-                    if (count > max - total) count = max - total;
-                }
+//                    // 最后一次读取大小不同
+//                    if (count > max - total) count = max - total;
+//                }
 
-                count = src.Read(buffer, 0, count);
-                if (count <= 0) break;
-                total += count;
+//                count = src.Read(buffer, 0, count);
+//                if (count <= 0) break;
+//                total += count;
 
-                des.Write(buffer, 0, count);
-            }
+//                des.Write(buffer, 0, count);
+//            }
 
-            return total;
-        }
+//            return total;
+//        }
 
         /// <summary>把一个字节数组写入到一个数据流</summary>
         /// <param name="des">目的数据流</param>
@@ -1035,7 +1035,7 @@ namespace System
             var bts = new Byte[length / 2];
             for (var i = 0; i < bts.Length; i++)
             {
-                bts[i] = Byte.Parse(data.Substring(startIndex + 2 * i, 2), NumberStyles.HexNumber);
+                //bts[i] = Byte.Parse(data.Substring(startIndex + 2 * i, 2), NumberStyles.HexNumber);
             }
             return bts;
         }
