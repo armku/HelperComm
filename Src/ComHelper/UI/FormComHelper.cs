@@ -22,12 +22,20 @@ namespace ComHelper
         private void FormComHelper_Load(object sender, EventArgs e)
         {
             LoadInfo();
-            sp.DataReceived += Sp_DataReceived;
+            sp.DataReceived += Sp_DataReceived;           
         }
 
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            txtReceive.Text += e.ToString();
+            if (sp.BytesToRead > 0)
+            {
+                var buf = new Byte[sp.BytesToRead];
+
+                var count = sp.Read(buf, 0, buf.Length);
+                var str = Encoding.Default.GetString(buf,0,count);
+                txtReceive.Text += str;
+            }
+            
             if (txtReceive.Text.Length > 1000)
                 txtReceive.Text = "";
         }
