@@ -159,7 +159,9 @@
             // 
             // txtReceive
             // 
+            this.txtReceive.BackColor = System.Drawing.SystemColors.WindowText;
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtReceive.ForeColor = System.Drawing.SystemColors.Window;
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(3, 17);
             this.txtReceive.Name = "txtReceive";
