@@ -142,7 +142,7 @@ namespace ComHelper
             if (p > 0) name = name.Substring(0, p);
             btnConnect.Text = "关闭";
             sp.PortName = name;
-            sp.BaudRate = 256000;
+            sp.BaudRate = Convert.ToInt32(cbBaundrate.Text);
             sp.Open();
         }
         void Disconnect()
