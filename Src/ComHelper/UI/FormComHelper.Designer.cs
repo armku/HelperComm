@@ -142,6 +142,7 @@
             this.btnConnect.TabIndex = 12;
             this.btnConnect.Text = "打开";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // gbReceive
             // 

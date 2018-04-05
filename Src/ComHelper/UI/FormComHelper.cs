@@ -108,6 +108,39 @@ namespace ComHelper
                 }
             }
             return dic;
-        }        
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn.Text == "打开")
+                Connect();
+            else
+                Disconnect();
+        }
+        void Connect()
+        {
+            var name = cbName.SelectedItem + "";
+            if (String.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("请选择串口！", Text);
+                cbName.Focus();
+                return;
+            }
+            var p = name.IndexOf("(");
+            if (p > 0) name = name.Substring(0, p);
+            btnConnect.Text = "关闭";
+        }
+        void Disconnect()
+        {
+            //if (spList.Enabled) return;
+            if (btnConnect.Text == "打开") return;
+
+            //var st = spList.Port;
+            //if (st != null) st.Disconnected -= (s, e) => this.Invoke(Disconnect);
+            //spList.Disconnect();
+
+            btnConnect.Text = "打开";
+        }
     }
 }
