@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComHelper.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,27 +17,27 @@ namespace ComHelper.Log
         /// <summary>调试日志</summary>
         /// <param name="format">格式化字符串</param>
         /// <param name="args">格式化参数</param>
-        public virtual void Debug(String format, params Object[] args) { Write(LogLevel.Debug, format, args); }
+        //public virtual void Debug(String format, params Object[] args) { Write(LogLevel.Debug, format, args); }
 
         /// <summary>信息日志</summary>
         /// <param name="format">格式化字符串</param>
         /// <param name="args">格式化参数</param>
-        public virtual void Info(String format, params Object[] args) { Write(LogLevel.Info, format, args); }
+        //public virtual void Info(String format, params Object[] args) { Write(LogLevel.Info, format, args); }
 
         /// <summary>警告日志</summary>
         /// <param name="format">格式化字符串</param>
         /// <param name="args">格式化参数</param>
-        public virtual void Warn(String format, params Object[] args) { Write(LogLevel.Warn, format, args); }
+        //public virtual void Warn(String format, params Object[] args) { Write(LogLevel.Warn, format, args); }
 
         /// <summary>错误日志</summary>
         /// <param name="format">格式化字符串</param>
         /// <param name="args">格式化参数</param>
-        public virtual void Error(String format, params Object[] args) { Write(LogLevel.Error, format, args); }
+        //public virtual void Error(String format, params Object[] args) { Write(LogLevel.Error, format, args); }
 
         /// <summary>严重错误日志</summary>
         /// <param name="format">格式化字符串</param>
         /// <param name="args">格式化参数</param>
-        public virtual void Fatal(String format, params Object[] args) { Write(LogLevel.Fatal, format, args); }
+        //public virtual void Fatal(String format, params Object[] args) { Write(LogLevel.Fatal, format, args); }
         #endregion
 
         #region 核心方法
@@ -44,10 +45,10 @@ namespace ComHelper.Log
         /// <param name="level"></param>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public virtual void Write(LogLevel level, String format, params Object[] args)
-        {
-            if (Enable && level >= Level) OnWrite(level, format, args);
-        }
+        //public virtual void Write(LogLevel level, String format, params Object[] args)
+        //{
+        //    if (Enable && level >= Level) OnWrite(level, format, args);
+        //}
 
         /// <summary>写日志</summary>
         /// <param name="level"></param>
@@ -101,16 +102,16 @@ namespace ComHelper.Log
 
         private LogLevel? _Level;
         /// <summary>日志等级，只输出大于等于该级别的日志，默认Info，打开NewLife.Debug时默认为最低的Debug</summary>
-        public LogLevel Level
-        {
-            get
-            {
-                if (_Level != null) return _Level.Value;
+        //public LogLevel Level
+        //{
+        //    get
+        //    {
+        //        if (_Level != null) return _Level.Value;
 
-                return Setting.Current.LogLevel;
-            }
-            set { _Level = value; }
-        }
+        //        return Setting.Current.LogLevel;
+        //    }
+        //    set { _Level = value; }
+        //}
         #endregion
 
         #region 静态空实现
