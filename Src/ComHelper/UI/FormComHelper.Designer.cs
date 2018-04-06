@@ -64,7 +64,7 @@
             this.toolStripStatusLabel3,
             this.toolStripStatusLabel4,
             this.toolStripStatusLabel5});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 364);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 385);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(592, 22);
             this.statusStrip1.TabIndex = 7;
@@ -153,20 +153,22 @@
             this.gbReceive.Controls.Add(this.txtReceive);
             this.gbReceive.Location = new System.Drawing.Point(3, 39);
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Size = new System.Drawing.Size(577, 241);
+            this.gbReceive.Size = new System.Drawing.Size(577, 262);
             this.gbReceive.TabIndex = 13;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "接收区：已接收0字节";
             // 
             // txtReceive
             // 
+            this.txtReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtReceive.BackColor = System.Drawing.SystemColors.WindowText;
-            this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtReceive.ForeColor = System.Drawing.SystemColors.Window;
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(3, 17);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(571, 221);
+            this.txtReceive.Size = new System.Drawing.Size(571, 239);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -180,7 +182,7 @@
             this.gbSend.Controls.Add(this.numMutilSend);
             this.gbSend.Controls.Add(this.label1);
             this.gbSend.Controls.Add(this.label7);
-            this.gbSend.Location = new System.Drawing.Point(3, 283);
+            this.gbSend.Location = new System.Drawing.Point(3, 304);
             this.gbSend.Name = "gbSend";
             this.gbSend.Size = new System.Drawing.Size(577, 84);
             this.gbSend.TabIndex = 14;
@@ -284,7 +286,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 386);
+            this.ClientSize = new System.Drawing.Size(592, 407);
             this.Controls.Add(this.btnRcvClear);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.gbReceive);
