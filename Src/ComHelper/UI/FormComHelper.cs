@@ -34,15 +34,15 @@ namespace ComHelper
 
                 var count = sp.Read(buf, 0, buf.Length);
                 var str = Encoding.Default.GetString(buf,0,count);
-                txtReceive.Text += str;                
+                //txtReceive.Text += str;
+                txtReceive.Append(str);
             }
-
-            if (txtReceive.Lines.Length > 1000)
-                txtReceive.Clear();
-            txtReceive.Select(txtReceive.TextLength, 0);
-            txtReceive.ScrollToCaret();
-        }
-
+            //InfoAdd("");            
+            //if (txtReceive.Lines.Length > 1000)
+            //    txtReceive.Clear();
+            //txtReceive.Select(txtReceive.TextLength, 0);
+            //txtReceive.ScrollToCaret();
+        }        
         public void LoadInfo()
         {
             ShowPorts();
