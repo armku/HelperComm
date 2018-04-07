@@ -15,6 +15,14 @@ namespace ComHelper
     public partial class FormComHelper : Form
     {
         SerialPort sp = new SerialPort();
+        /// <summary>
+        /// 接收数量
+        /// </summary>
+        public int RxCnt { get; set; }
+        /// <summary>
+        /// 发送数量
+        /// </summary>
+        public int TxCnt { get; set; }
         public FormComHelper()
         {
             InitializeComponent();
@@ -23,7 +31,8 @@ namespace ComHelper
         private void FormComHelper_Load(object sender, EventArgs e)
         {
             LoadInfo();
-            sp.DataReceived += Sp_DataReceived;           
+            sp.DataReceived += Sp_DataReceived;
+            timer1.Start();
         }
 
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -33,6 +42,7 @@ namespace ComHelper
                 var buf = new Byte[sp.BytesToRead];
 
                 var count = sp.Read(buf, 0, buf.Length);
+                RxCnt += count;
                 var str = Encoding.Default.GetString(buf,0,count);
                 txtReceive.Append(str);
             }            
@@ -123,12 +133,18 @@ namespace ComHelper
 
             // 处理换行
             str = str.Replace("\n", "\r\n");
-
+            TxCnt += str.Length;
             if (count == 1)
             {
                 sp.Write(str);
                 return;
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            toolStripStatusLabel3.Text = "Rx:" + RxCnt.ToString();
+            toolStripStatusLabel5.Text = "Tx:" + TxCnt.ToString();
         }
     }
 }
