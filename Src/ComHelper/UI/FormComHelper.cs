@@ -121,6 +121,8 @@ namespace ComHelper
         private void btnRcvClear_Click(object sender, EventArgs e)
         {
             txtReceive.Clear();
+            TxCnt = 0;
+            RxCnt = 0;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
