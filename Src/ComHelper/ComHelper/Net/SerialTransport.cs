@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using ComHelper.Data;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -92,7 +93,7 @@ namespace ComHelper.Net
         }
 
         /// <summary>粘包处理接口</summary>
-        //public IPacket Packet { get; set; }
+        public IPacket Packet { get; set; }
 
         /// <summary>字节超时。数据包间隔，默认20ms</summary>
         public Int32 ByteTimeout { get; set; } = 20;
@@ -262,37 +263,37 @@ namespace ComHelper.Net
             }
         }
 
-        //void ProcessReceive(Packet pk)
-        //{
-        //    try
-        //    {
-        //        if (Packet == null)
-        //            OnReceive(pk);
-        //        else
-        //        {
-        //            // 拆包，多个包多次调用处理程序
-        //            foreach (var msg in Packet.Parse(pk))
-        //            {
-        //                OnReceive(msg);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (!ex.IsDisposed()) Log.Error("{0}.OnReceive {1}", PortName, ex.Message);
-        //    }
-        //}
+        void ProcessReceive(Packet pk)
+        {
+            try
+            {
+                if (Packet == null)
+                    OnReceive(pk);
+                else
+                {
+                    // 拆包，多个包多次调用处理程序
+                    //            foreach (var msg in Packet.Parse(pk))
+                    //            {
+                    //                OnReceive(msg);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                //if (!ex.IsDisposed()) Log.Error("{0}.OnReceive {1}", PortName, ex.Message);
+            }
+        }
 
         /// <summary>处理收到的数据。默认匹配同步接收委托</summary>
         /// <param name="pk"></param>
-        //internal virtual void OnReceive(Packet pk)
-        //{
-        //    // 同步匹配
-        //    if (Packet != null && Packet.Match(pk, null)) return;
+        internal virtual void OnReceive(Packet pk)
+        {
+            // 同步匹配
+            //    if (Packet != null && Packet.Match(pk, null)) return;
 
-        //    // 触发事件
-        //    Received?.Invoke(this, new ReceivedEventArgs(pk));
-        //}
+            // 触发事件
+            //    Received?.Invoke(this, new ReceivedEventArgs(pk));
+        }
 
         /// <summary>数据到达事件</summary>
         public event EventHandler<ReceivedEventArgs> Received;
