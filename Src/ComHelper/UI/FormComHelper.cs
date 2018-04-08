@@ -96,7 +96,14 @@ namespace ComHelper
             btnConnect.Text = "关闭";
             sp.PortName = name;
             sp.BaudRate = Convert.ToInt32(cbBaundrate.Text);
-            sp.Open();
+            try
+            {
+                sp.Open();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
         void Disconnect()
         {
