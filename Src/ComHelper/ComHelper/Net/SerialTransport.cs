@@ -139,7 +139,7 @@ namespace ComHelper.Net
             if (!Serial.IsOpen)
             {
                 Serial.Open();
-                //if (Received != null) Serial.DataReceived += DataReceived;
+                if (Received != null) Serial.DataReceived += DataReceived;
             }
 
             return true;
@@ -294,7 +294,7 @@ namespace ComHelper.Net
         //}
 
         /// <summary>数据到达事件</summary>
-        //public event EventHandler<ReceivedEventArgs> Received;
+        public event EventHandler<ReceivedEventArgs> Received;
         #endregion
 
         #region 自动检测串口断开

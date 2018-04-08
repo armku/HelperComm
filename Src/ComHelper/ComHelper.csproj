@@ -58,6 +58,7 @@
     <Compile Include="ComHelper\Net\IPacket.cs" />
     <Compile Include="ComHelper\Net\IPacketQueue.cs" />
     <Compile Include="ComHelper\Net\ITransport.cs" />
+    <Compile Include="ComHelper\Net\ReceivedEventArgs.cs" />
     <Compile Include="ComHelper\Net\SerialTransport.cs" />
     <Compile Include="UI\ControlHelper.cs" />
     <Compile Include="UI\FormComHelper.cs">
