@@ -14,7 +14,7 @@ namespace ComHelper
 {
     public partial class FormComHelper : Form
     {
-        SerialTransport spnew = new SerialTransport();
+        SerialTransport sp = new SerialTransport();
         /// <summary>
         /// 接收数量
         /// </summary>
@@ -31,19 +31,16 @@ namespace ComHelper
         private void FormComHelper_Load(object sender, EventArgs e)
         {
             LoadInfo();
-            spnew.EnsureCreate();
-            spnew.Serial.DataReceived += Sp_DataReceived;
-
             timer1.Start();
         }
 
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {            
-            if (spnew.Serial.BytesToRead > 0)
+            if (sp.Serial.BytesToRead > 0)
             {
-                var buf = new Byte[spnew.Serial.BytesToRead];
+                var buf = new Byte[sp.Serial.BytesToRead];
 
-                var count = spnew.Serial.Read(buf, 0, buf.Length);
+                var count = sp.Serial.Read(buf, 0, buf.Length);
                 RxCnt += count;
                 var str = Encoding.Default.GetString(buf,0,count);
                 txtReceive.Append(str);
@@ -96,16 +93,17 @@ namespace ComHelper
             var p = name.IndexOf("(");
             if (p > 0) name = name.Substring(0, p);
             btnConnect.Text = "关闭";
-            spnew.Serial.PortName = name;
-            spnew.Serial.BaudRate = Convert.ToInt32(cbBaundrate.Text);
+            sp.PortName = name;
+            sp.BaudRate = Convert.ToInt32(cbBaundrate.Text);
             try
             {
-                spnew.Serial.Open();
+                sp.Open();
             }
             catch(Exception e)
             {
                 MessageBox.Show(e.ToString());
             }
+            sp.Serial.DataReceived += Sp_DataReceived;
         }
         void Disconnect()
         {
@@ -117,7 +115,8 @@ namespace ComHelper
             //spList.Disconnect();
 
             btnConnect.Text = "打开";
-            spnew.Serial.Close();
+            sp.Serial.Close();
+            sp.Serial.DataReceived -= Sp_DataReceived;
         }
 
         private void btnRcvClear_Click(object sender, EventArgs e)
@@ -147,7 +146,7 @@ namespace ComHelper
             TxCnt += str.Length;
             if (count == 1)
             {
-                spnew.Serial.Write(str);
+                sp.Serial.Write(str);
                 return;
             }
         }
