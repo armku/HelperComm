@@ -14,7 +14,7 @@ namespace ComHelper
 {
     public partial class FormComHelper : Form
     {
-        SerialPort sp = new SerialPort();
+        SerialTransport spnew = new SerialTransport();
         /// <summary>
         /// 接收数量
         /// </summary>
@@ -31,17 +31,19 @@ namespace ComHelper
         private void FormComHelper_Load(object sender, EventArgs e)
         {
             LoadInfo();
-            sp.DataReceived += Sp_DataReceived;
+            spnew.EnsureCreate();
+            spnew.Serial.DataReceived += Sp_DataReceived;
+
             timer1.Start();
         }
 
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {            
-            if (sp.BytesToRead > 0)
+            if (spnew.Serial.BytesToRead > 0)
             {
-                var buf = new Byte[sp.BytesToRead];
+                var buf = new Byte[spnew.Serial.BytesToRead];
 
-                var count = sp.Read(buf, 0, buf.Length);
+                var count = spnew.Serial.Read(buf, 0, buf.Length);
                 RxCnt += count;
                 var str = Encoding.Default.GetString(buf,0,count);
                 txtReceive.Append(str);
@@ -94,11 +96,11 @@ namespace ComHelper
             var p = name.IndexOf("(");
             if (p > 0) name = name.Substring(0, p);
             btnConnect.Text = "关闭";
-            sp.PortName = name;
-            sp.BaudRate = Convert.ToInt32(cbBaundrate.Text);
+            spnew.Serial.PortName = name;
+            spnew.Serial.BaudRate = Convert.ToInt32(cbBaundrate.Text);
             try
             {
-                sp.Open();
+                spnew.Serial.Open();
             }
             catch(Exception e)
             {
@@ -115,7 +117,7 @@ namespace ComHelper
             //spList.Disconnect();
 
             btnConnect.Text = "打开";
-            sp.Close();
+            spnew.Serial.Close();
         }
 
         private void btnRcvClear_Click(object sender, EventArgs e)
@@ -145,7 +147,7 @@ namespace ComHelper
             TxCnt += str.Length;
             if (count == 1)
             {
-                sp.Write(str);
+                spnew.Serial.Write(str);
                 return;
             }
         }
