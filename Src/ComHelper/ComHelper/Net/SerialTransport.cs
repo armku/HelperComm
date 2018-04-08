@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -228,8 +229,8 @@ namespace ComHelper.Net
                     var buf = new Byte[sp.BytesToRead];
 
                     var count = sp.Read(buf, 0, buf.Length);
-                    //if (count != buf.Length) buf = buf.ReadBytes(0, count);
-                    //var ms = new MemoryStream(buf, 0, count, false);
+                    if (count != buf.Length) buf = buf.ReadBytes(0, count);
+                    var ms = new MemoryStream(buf, 0, count, false);
                     //var pk = new Packet(buf, 0, count);
 
                     //ProcessReceive(pk);
