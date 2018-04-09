@@ -35,17 +35,17 @@ namespace ComHelper
         }
 
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {            
+        {
             if (sp.Serial.BytesToRead > 0)
             {
                 var buf = new Byte[sp.Serial.BytesToRead];
 
                 var count = sp.Serial.Read(buf, 0, buf.Length);
                 RxCnt += count;
-                var str = Encoding.Default.GetString(buf,0,count);
+                var str = Encoding.Default.GetString(buf, 0, count);
                 txtReceive.Append(str);
-            }            
-        }        
+            }
+        }
         public void LoadInfo()
         {
             ShowPorts();
@@ -57,7 +57,7 @@ namespace ComHelper
         /// <summary>下拉框显示串口</summary>
         public void ShowPorts()
         {
-            var ps =SerialTransport.GetPortNames();
+            var ps = SerialTransport.GetPortNames();
             var str = String.Join(",", ps);
             // 如果端口有所改变，则重新绑定
             if (_ports != str)
@@ -72,7 +72,7 @@ namespace ComHelper
                 });
             }
         }
-        
+
         private void btnConnect_Click(object sender, EventArgs e)
         {
             var btn = sender as Button;
@@ -99,16 +99,17 @@ namespace ComHelper
             {
                 sp.Open();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
             }
-            sp.Serial.DataReceived += Sp_DataReceived;
+            //sp.Serial.DataReceived += Sp_DataReceived;
             sp.Received += Sp_Received;
         }
 
         private void Sp_Received(object sender, ReceivedEventArgs e)
         {
+#if false
             var sp = sender as SerialTransport;
             if (sp.Serial.BytesToRead > 0)
             {
@@ -118,8 +119,14 @@ namespace ComHelper
                 RxCnt += count;
                 var str = Encoding.Default.GetString(buf, 0, count);
                 txtReceive.Append(str);
+#endif
+            if (e.Data.Length > 0)
+            {
+                var str = Encoding.Default.GetString(e.Data, 0, e.Data.Length);
+                txtReceive.Append(str);
             }
-        }
+        //}
+    }
 
         void Disconnect()
         {
@@ -132,7 +139,7 @@ namespace ComHelper
 
             btnConnect.Text = "打开";
             sp.Serial.Close();
-            sp.Serial.DataReceived -= Sp_DataReceived;
+            //sp.Serial.DataReceived -= Sp_DataReceived;
             sp.Received += Sp_Received;
         }
 
