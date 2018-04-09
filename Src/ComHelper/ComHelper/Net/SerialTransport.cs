@@ -232,9 +232,9 @@ namespace ComHelper.Net
                     var count = sp.Read(buf, 0, buf.Length);
                     if (count != buf.Length) buf = buf.ReadBytes(0, count);
                     var ms = new MemoryStream(buf, 0, count, false);
-                    //var pk = new Packet(buf, 0, count);
+                    var pk = new Packet(buf, 0, count);
 
-                    //ProcessReceive(pk);
+                    ProcessReceive(pk);
                 }
             }
             catch (Exception ex)
@@ -273,9 +273,9 @@ namespace ComHelper.Net
                 {
                     // 拆包，多个包多次调用处理程序
                     //            foreach (var msg in Packet.Parse(pk))
-                    //            {
+                                {
                     //                OnReceive(msg);
-                    //}
+                    }
                 }
             }
             catch (Exception ex)
