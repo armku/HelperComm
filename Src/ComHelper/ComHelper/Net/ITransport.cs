@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ComHelper.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ComHelper.Net
 {
@@ -20,18 +22,18 @@ namespace ComHelper.Net
 
         /// <summary>写入数据</summary>
         /// <param name="pk">数据包</param>
-        //Boolean Send(Packet pk);
+        Boolean Send(Packet pk);
 
         /// <summary>异步发送数据并等待响应</summary>
         /// <param name="pk">数据包</param>
         /// <returns></returns>
-        //Task<Packet> SendAsync(Packet pk);
+        Task<Packet> SendAsync(Packet pk);
 
         /// <summary>读取数据</summary>
         /// <returns></returns>
-        //Packet Receive();
+        Packet Receive();
 
         /// <summary>数据到达事件</summary>
-        //event EventHandler<ReceivedEventArgs> Received;
+        event EventHandler<ReceivedEventArgs> Received;
     }
 }
