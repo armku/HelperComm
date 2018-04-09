@@ -98,6 +98,7 @@ namespace ComHelper
             if (e.Data.Length > 0)
             {
                 var str = Encoding.Default.GetString(e.Data, 0, e.Data.Length);
+                RxCnt += e.Length;
                 txtReceive.Append(str);
             }
         }
