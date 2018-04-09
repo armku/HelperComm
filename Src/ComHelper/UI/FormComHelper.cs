@@ -109,7 +109,16 @@ namespace ComHelper
 
         private void Sp_Received(object sender, ReceivedEventArgs e)
         {
-            throw new NotImplementedException();
+            var sp = sender as SerialTransport;
+            if (sp.Serial.BytesToRead > 0)
+            {
+                var buf = new Byte[sp.Serial.BytesToRead];
+
+                var count = sp.Serial.Read(buf, 0, buf.Length);
+                RxCnt += count;
+                var str = Encoding.Default.GetString(buf, 0, count);
+                txtReceive.Append(str);
+            }
         }
 
         void Disconnect()
