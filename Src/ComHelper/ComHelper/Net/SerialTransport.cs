@@ -224,7 +224,7 @@ namespace ComHelper.Net
             // 发送者必须保持一定间隔，每个报文不能太大，否则会因为粘包拆包而出错
             try
             {
-                var sp = sender as SerialPort;
+                var sp = sender as SerialPort;                
                 WaitMore();
                 if (sp.BytesToRead > 0)
                 {

@@ -95,6 +95,7 @@ namespace ComHelper
             btnConnect.Text = "关闭";
             sp.PortName = name;
             sp.BaudRate = Convert.ToInt32(cbBaundrate.Text);
+            sp.Received += Sp_Received;
             try
             {
                 sp.Open();
@@ -103,8 +104,7 @@ namespace ComHelper
             {
                 MessageBox.Show(e.ToString());
             }
-            //sp.Serial.DataReceived += Sp_DataReceived;
-            sp.Received += Sp_Received;
+            //sp.Serial.DataReceived += Sp_DataReceived;           
         }
 
         private void Sp_Received(object sender, ReceivedEventArgs e)
