@@ -32,6 +32,8 @@ namespace ComHelper
         {
             LoadInfo();
             timer1.Start();
+            txtReceive.SetDefaultStyle(12);
+            txtSend.SetDefaultStyle(12);
         }
         public void LoadInfo()
         {
