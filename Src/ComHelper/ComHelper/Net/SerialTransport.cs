@@ -292,7 +292,7 @@ namespace ComHelper.Net
             if (Packet != null && Packet.Match(pk, null)) return;
 
             // 触发事件
-            //Received?.Invoke(this, new ReceivedEventArgs(pk));
+            Received?.Invoke(this, new ReceivedEventArgs(pk));
         }
 
         /// <summary>数据到达事件</summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComHelper.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +12,17 @@ namespace ComHelper.Net
     {
         #region 属性
         /// <summary>数据包</summary>
-        //public Packet Packet { get; set; }
+        public Packet Packet { get; set; }
 
         /// <summary>数据</summary>
-        //public Byte[] Data
-        //{
-        //    get { return Packet.ToArray(); }
-        //    set { Packet.Set(value); }
-        //}
+        public Byte[] Data
+        {
+            get { return Packet.ToArray(); }
+            set { Packet.Set(value); }
+        }
 
         /// <summary>数据长度</summary>
-        //public Int32 Length { get { return Packet.Count; } }
+        public Int32 Length { get { return Packet.Count; } }
 
         /// <summary>用户数据。比如远程地址等</summary>
         public Object UserState { get; set; }
@@ -31,10 +32,10 @@ namespace ComHelper.Net
 
         /// <summary>使用字节数组实例化一个数据事件参数</summary>
         /// <param name="pk"></param>
-        //public ReceivedEventArgs(Packet pk)
-        //{
-        //    Packet = pk;
-        //}
+        public ReceivedEventArgs(Packet pk)
+        {
+            Packet = pk;
+        }
         #endregion
 
         #region 方法
@@ -44,10 +45,10 @@ namespace ComHelper.Net
         /// <param name="separate">分隔符</param>
         /// <param name="groupSize">分组大小，为0时对每个字节应用分隔符，否则对每个分组使用</param>
         /// <returns></returns>
-        //public String ToHex(Int32 maxLength = 32, String separate = "-", Int32 groupSize = 0)
-        //{
-        //    return Packet?.ToHex(maxLength, separate, groupSize);
-        //}
+        public String ToHex(Int32 maxLength = 32, String separate = "-", Int32 groupSize = 0)
+        {
+            return Packet?.ToHex(maxLength, separate, groupSize);
+        }
         #endregion
     }
 }
