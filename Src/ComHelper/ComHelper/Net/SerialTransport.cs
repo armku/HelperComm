@@ -273,7 +273,7 @@ namespace ComHelper.Net
                 {
                     // 拆包，多个包多次调用处理程序
                     //            foreach (var msg in Packet.Parse(pk))
-                                {
+                    {
                     //                OnReceive(msg);
                     }
                 }
@@ -289,10 +289,10 @@ namespace ComHelper.Net
         internal virtual void OnReceive(Packet pk)
         {
             // 同步匹配
-            //    if (Packet != null && Packet.Match(pk, null)) return;
+            //if (Packet != null && Packet.Match(pk, null)) return;
 
             // 触发事件
-            //    Received?.Invoke(this, new ReceivedEventArgs(pk));
+            //Received?.Invoke(this, new ReceivedEventArgs(pk));
         }
 
         /// <summary>数据到达事件</summary>
