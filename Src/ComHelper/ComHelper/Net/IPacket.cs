@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComHelper.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -36,7 +37,7 @@ namespace ComHelper.Net
         /// <summary>分析数据流，得到一帧数据</summary>
         /// <param name="pk"></param>
         /// <returns></returns>
-        //Packet[] Parse(Packet pk);
+        Packet[] Parse(Packet pk);
     }
 
     /// <summary>粘包处理接口工厂</summary>
@@ -123,73 +124,73 @@ namespace ComHelper.Net
         /// <summary>分析数据流，得到一帧数据</summary>
         /// <param name="pk"></param>
         /// <returns></returns>
-        //public virtual Packet[] Parse(Packet pk)
-        //{
-        //    if (Offset < 0) return new Packet[] { pk };
+        public virtual Packet[] Parse(Packet pk)
+        {
+            if (Offset < 0) return new Packet[] { pk };
 
-        //    var nodata = _ms == null || _ms.Position < 0 || _ms.Position >= _ms.Length;
+           var nodata = _ms == null || _ms.Position < 0 || _ms.Position >= _ms.Length;
 
-        //    var list = new List<Packet>();
-        //    // 内部缓存没有数据，直接判断输入数据流是否刚好一帧数据，快速处理，绝大多数是这种场景
-        //    if (nodata)
-        //    {
-        //        if (pk == null) return list.ToArray();
+            var list = new List<Packet>();
+            // 内部缓存没有数据，直接判断输入数据流是否刚好一帧数据，快速处理，绝大多数是这种场景
+            if (nodata)
+            {
+                if (pk == null) return list.ToArray();
 
-        //        //var ms = pk.GetStream();
-        //        var idx = 0;
-        //        while (idx < pk.Count)
-        //        {
-        //            var pk2 = new Packet(pk.Data, pk.Offset + idx, pk.Count - idx);
-        //            var len = GetLength(pk2.GetStream());
-        //            if (len <= 0 || len > pk2.Count) break;
+                //var ms = pk.GetStream();
+                var idx = 0;
+                while (idx < pk.Count)
+                {
+                    var pk2 = new Packet(pk.Data, pk.Offset + idx, pk.Count - idx);
+                    var len = GetLength(pk2.GetStream());
+                    if (len <= 0 || len > pk2.Count) break;
 
-        //            pk2 = new Packet(pk.Data, pk.Offset + idx, len);
-        //            list.Add(pk2);
-        //            idx += len;
-        //        }
-        //        // 如果没有剩余，可以返回
-        //        if (idx == pk.Count) return list.ToArray();
+                    pk2 = new Packet(pk.Data, pk.Offset + idx, len);
+                    list.Add(pk2);
+                    idx += len;
+                }
+                // 如果没有剩余，可以返回
+                if (idx == pk.Count) return list.ToArray();
 
-        //        // 剩下的
-        //        pk = new Packet(pk.Data, pk.Offset + idx, pk.Count - idx);
-        //    }
+                // 剩下的
+                pk = new Packet(pk.Data, pk.Offset + idx, pk.Count - idx);
+            }
 
-        //    if (_ms == null) _ms = new MemoryStream();
+            if (_ms == null) _ms = new MemoryStream();
 
-        //    // 加锁，避免多线程冲突
-        //    lock (_ms)
-        //    {
-        //        if (pk != null)
-        //        {
-        //            // 超过该时间后按废弃数据处理
-        //            var now = DateTime.Now;
-        //            if (_last.AddMilliseconds(Expire) < now)
-        //            {
-        //                _ms.SetLength(0);
-        //                _ms.Position = 0;
-        //            }
-        //            _last = now;
+            // 加锁，避免多线程冲突
+            lock (_ms)
+            {
+                if (pk != null)
+                {
+                    // 超过该时间后按废弃数据处理
+                    var now = DateTime.Now;
+                    if (_last.AddMilliseconds(Expire) < now)
+                    {
+                        _ms.SetLength(0);
+                        _ms.Position = 0;
+                    }
+                    _last = now;
 
-        //            // 拷贝数据到最后面
-        //            var p = _ms.Position;
-        //            _ms.Position = _ms.Length;
-        //            //_ms.Write(pk.Data, pk.Offset, pk.Count);
-        //            pk.WriteTo(_ms);
-        //            _ms.Position = p;
-        //        }
+                    // 拷贝数据到最后面
+                    var p = _ms.Position;
+                    _ms.Position = _ms.Length;
+                    //_ms.Write(pk.Data, pk.Offset, pk.Count);
+                    pk.WriteTo(_ms);
+                    _ms.Position = p;
+                }
 
-        //        while (_ms.Position < _ms.Length)
-        //        {
-        //            var len = GetLength(_ms);
-        //            if (len <= 0) break;
+                while (_ms.Position < _ms.Length)
+                {
+                    var len = GetLength(_ms);
+                    if (len <= 0) break;
 
-        //            var pk2 = new Packet(_ms.ReadBytes(len));
-        //            list.Add(pk2);
-        //        }
+                    var pk2 = new Packet(_ms.ReadBytes(len));
+                    list.Add(pk2);
+                }
 
-        //        return list.ToArray();
-        //    }
-        //}
+                return list.ToArray();
+            }
+        }
 
         /// <summary>从数据流中获取整帧数据长度</summary>
         /// <param name="stream"></param>
