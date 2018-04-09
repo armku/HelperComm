@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ComHelper.Net
 {
@@ -26,7 +27,7 @@ namespace ComHelper.Net
         /// <param name="request">请求的数据</param>
         /// <param name="remote">远程</param>
         /// <param name="msTimeout">超时取消时间</param>
-        //Task<Packet> Add(Packet request, IPEndPoint remote, Int32 msTimeout);
+        Task<Packet> Add(Packet request, IPEndPoint remote, Int32 msTimeout);
 
         /// <summary>检查请求队列是否有匹配该响应的请求</summary>
         /// <param name="response">响应的数据</param>
@@ -98,12 +99,12 @@ namespace ComHelper.Net
         /// <param name="request">请求的数据</param>
         /// <param name="remote">远程</param>
         /// <param name="msTimeout">超时取消时间</param>
-        //public virtual Task<Packet> Add(Packet request, IPEndPoint remote, Int32 msTimeout)
-        //{
-        //    if (Queue == null) Queue = new DefaultPacketQueue();
+        public virtual Task<Packet> Add(Packet request, IPEndPoint remote, Int32 msTimeout)
+        {
+            if (Queue == null) Queue = new DefaultPacketQueue();
 
-        //    return Queue.Add(this, request, remote, msTimeout);
-        //}
+            return Queue.Add(this, request, remote, msTimeout);
+        }
 
         /// <summary>检查请求队列是否有匹配该响应的请求</summary>
         /// <param name="response">响应的数据</param>

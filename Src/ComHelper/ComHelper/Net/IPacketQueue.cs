@@ -17,7 +17,7 @@ namespace ComHelper.Net
         /// <param name="request">请求的数据</param>
         /// <param name="remote">远程</param>
         /// <param name="msTimeout">超时取消时间</param>
-        //Task<Packet> Add(Object owner, Packet request, IPEndPoint remote, Int32 msTimeout);
+        Task<Packet> Add(Object owner, Packet request, IPEndPoint remote, Int32 msTimeout);
 
         /// <summary>检查请求队列是否有匹配该响应的请求</summary>
         /// <param name="owner">拥有者</param>
@@ -38,36 +38,36 @@ namespace ComHelper.Net
         /// <param name="request">请求的数据</param>
         /// <param name="remote">远程</param>
         /// <param name="msTimeout">超时取消时间</param>
-        //public virtual Task<Packet> Add(Object owner, Packet request, IPEndPoint remote, Int32 msTimeout)
-        //{
-        //    var now = DateTime.Now;
+        public virtual Task<Packet> Add(Object owner, Packet request, IPEndPoint remote, Int32 msTimeout)
+        {
+            var now = DateTime.Now;
 
-        //    var qi = new Item
-        //    {
-        //        Owner = owner,
-        //        Request = request,
-        //        Remote = remote,
-        //        EndTime = now.AddMilliseconds(msTimeout),
-        //        Source = new TaskCompletionSource<Packet>()
-        //    };
+            var qi = new Item
+            {
+                Owner = owner,
+                Request = request,
+                Remote = remote,
+                EndTime = now.AddMilliseconds(msTimeout),
+                Source = new TaskCompletionSource<Packet>()
+            };
 
-        //    // 加锁处理，更安全
-        //    var qs = Items;
-        //    lock (qs)
-        //    {
-        //        qs.AddLast(qi);
-        //    }
+            // 加锁处理，更安全
+            var qs = Items;
+            lock (qs)
+            {
+                qs.AddLast(qi);
+            }
 
-        //    if (_Timer == null)
-        //    {
-        //        lock (this)
-        //        {
-        //            if (_Timer == null) _Timer = new TimerX(Check, null, 1000, 1000, "Packet");
-        //        }
-        //    }
+            //if (_Timer == null)
+            //{
+            //    lock (this)
+            //    {
+            //        if (_Timer == null) _Timer = new TimerX(Check, null, 1000, 1000, "Packet");
+            //    }
+            //}
 
-        //    return qi.Source.Task;
-        //}
+            return qi.Source.Task;
+        }
 
         /// <summary>检查请求队列是否有匹配该响应的请求</summary>
         /// <param name="owner">拥有者</param>

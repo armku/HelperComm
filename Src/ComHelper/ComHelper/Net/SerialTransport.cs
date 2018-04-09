@@ -7,6 +7,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ComHelper.Net
 {
@@ -167,54 +168,54 @@ namespace ComHelper.Net
         #region 发送
         /// <summary>写入数据</summary>
         /// <param name="pk">数据包</param>
-        //public virtual Boolean Send(Packet pk)
-        //{
-        //    if (!Open()) return false;
+        public virtual Boolean Send(Packet pk)
+        {
+            if (!Open()) return false;
 
-        //    WriteLog("Send:{0}", pk.ToHex());
+            //WriteLog("Send:{0}", pk.ToHex());
 
-        //    var sp = Serial;
-        //    lock (sp)
-        //    {
-        //        sp.Write(pk.Data, pk.Offset, pk.Count);
-        //    }
+            var sp = Serial;
+            lock (sp)
+            {
+                sp.Write(pk.Data, pk.Offset, pk.Count);
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
 
         /// <summary>异步发送数据并等待响应</summary>
         /// <param name="pk"></param>
         /// <returns></returns>
-        //public virtual async Task<Packet> SendAsync(Packet pk)
-        //{
-        //    if (!Open()) return null;
+        public virtual async Task<Packet> SendAsync(Packet pk)
+        {
+            if (!Open()) return null;
 
-        //    if (Packet == null) Packet = new PacketProvider();
+            if (Packet == null) Packet = new PacketProvider();
 
-        //    var task = Packet.Add(pk, null, Timeout);
+            var task = Packet.Add(pk, null, Timeout);
 
-        //    if (pk != null)
-        //    {
-        //        WriteLog("SendAsync:{0}", pk.ToHex());
+            if (pk != null)
+            {
+                //WriteLog("SendAsync:{0}", pk.ToHex());
 
-        //        // 发送数据
-        //        Serial.Write(pk.Data, pk.Offset, pk.Count);
-        //    }
+                // 发送数据
+                Serial.Write(pk.Data, pk.Offset, pk.Count);
+            }
 
-        //    return await task;
-        //}
+            return await task;
+        }
 
         /// <summary>接收数据</summary>
         /// <returns></returns>
-        //public virtual Packet Receive()
-        //{
-        //    if (!Open()) return null;
+        public virtual Packet Receive()
+        {
+            if (!Open()) return null;
 
-        //    var task = SendAsync(null);
-        //    if (Timeout > 0 && !task.Wait(Timeout)) return null;
+            var task = SendAsync(null);
+            if (Timeout > 0 && !task.Wait(Timeout)) return null;
 
-        //    return task.Result;
-        //}
+            return task.Result;
+        }
         #endregion
 
         #region 异步接收
