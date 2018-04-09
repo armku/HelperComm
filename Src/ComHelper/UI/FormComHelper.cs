@@ -104,7 +104,14 @@ namespace ComHelper
                 MessageBox.Show(e.ToString());
             }
             sp.Serial.DataReceived += Sp_DataReceived;
+            sp.Received += Sp_Received;
         }
+
+        private void Sp_Received(object sender, ReceivedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         void Disconnect()
         {
             //if (spList.Enabled) return;
@@ -117,6 +124,7 @@ namespace ComHelper
             btnConnect.Text = "打开";
             sp.Serial.Close();
             sp.Serial.DataReceived -= Sp_DataReceived;
+            sp.Received += Sp_Received;
         }
 
         private void btnRcvClear_Click(object sender, EventArgs e)
