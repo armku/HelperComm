@@ -114,7 +114,6 @@ namespace ComHelper
 
             btnConnect.Text = "打开";
             sp.Serial.Close();
-            //sp.Serial.DataReceived -= Sp_DataReceived;
             sp.Received += Sp_Received;
         }
 
