@@ -33,19 +33,6 @@ namespace ComHelper
             LoadInfo();
             timer1.Start();
         }
-
-        private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            if (sp.Serial.BytesToRead > 0)
-            {
-                var buf = new Byte[sp.Serial.BytesToRead];
-
-                var count = sp.Serial.Read(buf, 0, buf.Length);
-                RxCnt += count;
-                var str = Encoding.Default.GetString(buf, 0, count);
-                txtReceive.Append(str);
-            }
-        }
         public void LoadInfo()
         {
             ShowPorts();
@@ -103,30 +90,17 @@ namespace ComHelper
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
-            }
-            //sp.Serial.DataReceived += Sp_DataReceived;           
+            }        
         }
 
         private void Sp_Received(object sender, ReceivedEventArgs e)
         {
-#if false
-            var sp = sender as SerialTransport;
-            if (sp.Serial.BytesToRead > 0)
-            {
-                var buf = new Byte[sp.Serial.BytesToRead];
-
-                var count = sp.Serial.Read(buf, 0, buf.Length);
-                RxCnt += count;
-                var str = Encoding.Default.GetString(buf, 0, count);
-                txtReceive.Append(str);
-#endif
             if (e.Data.Length > 0)
             {
                 var str = Encoding.Default.GetString(e.Data, 0, e.Data.Length);
                 txtReceive.Append(str);
             }
-        //}
-    }
+        }
 
         void Disconnect()
         {
