@@ -274,7 +274,7 @@ namespace ComHelper.Net
                     // 拆包，多个包多次调用处理程序
                     foreach (var msg in Packet.Parse(pk))
                     {
-                    //                OnReceive(msg);
+                        OnReceive(msg);
                     }
                 }
             }
