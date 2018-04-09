@@ -32,7 +32,7 @@ namespace ComHelper.Net
         /// <param name="response">响应的数据</param>
         /// <param name="remote">远程</param>
         /// <returns></returns>
-        //Boolean Match(Packet response, IPEndPoint remote);
+        Boolean Match(Packet response, IPEndPoint remote);
 
         /// <summary>分析数据流，得到一帧数据</summary>
         /// <param name="pk"></param>
@@ -109,12 +109,12 @@ namespace ComHelper.Net
         /// <param name="response">响应的数据</param>
         /// <param name="remote">远程</param>
         /// <returns></returns>
-        //public virtual Boolean Match(Packet response, IPEndPoint remote)
-        //{
-        //    if (Queue == null) return false;
+        public virtual Boolean Match(Packet response, IPEndPoint remote)
+        {
+            if (Queue == null) return false;
 
-        //    return Queue.Match(this, response, remote);
-        //}
+            return Queue.Match(this, response, remote);
+        }
         #endregion
 
         #region 粘包处理

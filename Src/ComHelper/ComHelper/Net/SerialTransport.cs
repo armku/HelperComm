@@ -289,7 +289,7 @@ namespace ComHelper.Net
         internal virtual void OnReceive(Packet pk)
         {
             // 同步匹配
-            //if (Packet != null && Packet.Match(pk, null)) return;
+            if (Packet != null && Packet.Match(pk, null)) return;
 
             // 触发事件
             //Received?.Invoke(this, new ReceivedEventArgs(pk));
