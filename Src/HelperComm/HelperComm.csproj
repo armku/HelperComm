@@ -60,7 +60,6 @@
   <ItemGroup>
     <Compile Include="Core\Collections\CollectionHelper.cs" />
     <Compile Include="Core\Collections\DictionaryCache.cs" />
-    <Compile Include="Core\Collections\NullableDictionary.cs" />
     <Compile Include="Core\Common\Runtime.cs" />
     <Compile Include="Core\Common\Utility.cs" />
     <Compile Include="Core\Data\Packet.cs" />

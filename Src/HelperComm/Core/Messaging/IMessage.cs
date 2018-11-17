@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using NewLife.Data;
+﻿using NewLife.Data;
 using NewLife.Reflection;
+using System;
 
 namespace NewLife.Messaging
 {
@@ -27,10 +25,6 @@ namespace NewLife.Messaging
         /// <summary>把消息转为封包</summary>
         /// <returns></returns>
         Packet ToPacket();
-
-        ///// <summary>把消息写入到数据流中</summary>
-        ///// <param name="stream"></param>
-        //void Write(Stream stream);
     }
 
     /// <summary>消息命令基类</summary>
