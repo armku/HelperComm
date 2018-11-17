@@ -49,11 +49,6 @@ namespace XCoder
             return null;
         }
 
-        public void Save()
-        {
-            
-        }
-
         public static UIConfig Apply(TextBoxBase txt)
         {
             // 加载颜色
@@ -74,7 +69,6 @@ namespace XCoder
                 ui.Font = txt.Font;
                 ui.BackColor = txt.BackColor;
                 ui.ForeColor = txt.ForeColor;
-                ui.Save();
             }
 
             // 菜单控制
@@ -141,7 +135,6 @@ namespace XCoder
 
             var ui = UIConfig.Current;
             ui.Font = txt.Font;
-            ui.Save();
         }
 
         static void mi前景色_Click(Object sender, EventArgs e)
@@ -157,7 +150,6 @@ namespace XCoder
 
             var ui = UIConfig.Current;
             ui.ForeColor = txt.ForeColor;
-            ui.Save();
         }
 
         static void mi背景色_Click(Object sender, EventArgs e)
@@ -174,7 +166,6 @@ namespace XCoder
 
             var ui = UIConfig.Current;
             ui.BackColor = txt.BackColor;
-            ui.Save();
         }
     }
 }
