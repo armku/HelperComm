@@ -42,25 +42,4 @@ namespace NewLife
         #endregion
     }
 
-    /// <summary>异常事件参数</summary>
-    public class ExceptionEventArgs : CancelEventArgs
-    {
-        private String _Action;
-        /// <summary>发生异常时进行的动作</summary>
-        public String Action { get { return _Action; } set { _Action = value; } }
-
-        private Exception _Exception;
-        /// <summary>异常</summary>
-        public Exception Exception { get { return _Exception; } set { _Exception = value; } }
-    }
-
-    /// <summary>异常助手</summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static class ExceptionHelper
-    {
-        /// <summary>是否对象已被释放异常</summary>
-        /// <param name="ex"></param>
-        /// <returns></returns>
-        public static Boolean IsDisposed(this Exception ex) { return ex is ObjectDisposedException; }
-    }
 }

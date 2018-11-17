@@ -283,7 +283,7 @@ namespace NewLife.Net
             }
             catch (Exception ex)
             {
-                if (!ex.IsDisposed()) Log.Error("{0}.OnReceive {1}", PortName, ex.Message);
+               
             }
         }
 
