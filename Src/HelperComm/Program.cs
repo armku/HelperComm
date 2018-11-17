@@ -22,8 +22,6 @@ namespace XCoder
                                     
             try
             {
-                //Update(true);
-
                 if (!Runtime.Mono) new TimerX(s => Runtime.ReleaseMemory(), null, 5000, 10000);
             }
             catch (Exception ex)
