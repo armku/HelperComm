@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using NewLife.Log;
-using NewLife.Threading;
 
 namespace System.Windows.Forms
 {

@@ -22,10 +22,6 @@ namespace XCoder
         #endregion
 
         #region 加载/保存
-        public XConfig()
-        {
-        }
-
         protected override void OnLoaded()
         {            
             base.OnLoaded();

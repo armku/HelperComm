@@ -192,18 +192,6 @@ namespace NewLife.Net
 
             return await task;
         }
-
-        /// <summary>接收数据</summary>
-        /// <returns></returns>
-        public virtual Packet Receive()
-        {
-            if (!Open()) return null;
-
-            var task = SendAsync(null);
-            if (Timeout > 0 && !task.Wait(Timeout)) return null;
-
-            return task.Result;
-        }
         #endregion
 
         #region 异步接收

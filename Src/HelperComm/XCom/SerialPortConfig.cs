@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-#if !__MOBILE__
 using System.IO.Ports;
-#endif
 using System.Text;
 using System.Xml.Serialization;
 using NewLife.Xml;

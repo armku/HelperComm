@@ -125,14 +125,6 @@ namespace NewLife.Windows
                     cfg.BaudRate = (Int32)cbBaundrate.SelectedItem;
                 else
                     cfg.BaudRate = cbBaundrate.Text.ToInt();
-                //cfg.DataBits = (Int32)cbDataBit.SelectedItem;
-                //cfg.StopBits = (StopBits)cbStopBit.SelectedItem;
-                //cfg.Parity = (Parity)cbParity.SelectedItem;
-                //cfg.Encoding = (Encoding)cbEncoding.SelectedItem;
-                //cfg.WebEncoding = cbEncoding.SelectedItem + "";
-
-                //cfg.HexSend = chkHEXSend.Checked;
-                //cfg.HexShow = chkHEXShow.Checked;
 
                 cfg.Save();
             }
@@ -203,10 +195,6 @@ namespace NewLife.Windows
             // 不要选其它
             var mi = sender as ToolStripMenuItem;
             if (mi == null) return;
-            //foreach (ToolStripMenuItem item in (mi.OwnerItem as ToolStripMenuItem).DropDownItems)
-            //{
-            //    item.Checked = item == mi;
-            //}
             SelectMenu(sender);
 
             // 保存编码
