@@ -10,8 +10,85 @@ namespace System
     public static class AttributeX
     {
         #region 静态方法
+#if NET4
+        /// <summary>获取自定义属性</summary>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <param name="member"></param>
+        /// <param name="inherit"></param>
+        /// <returns></returns>
+        public static TAttribute GetCustomAttribute<TAttribute>(this MemberInfo member, Boolean inherit = true) where TAttribute : Attribute
+        {
+            var atts = member.GetCustomAttributes<TAttribute>(false)?.ToArray();
+            if (atts != null && atts.Length > 0) return atts[0];
+
+            if (inherit)
+            {
+                atts = member.GetCustomAttributes<TAttribute>(inherit)?.ToArray();
+                if (atts != null && atts.Length > 0) return atts[0];
+            }
+
+            return default(TAttribute);
+        }
+
+        /// <summary>获取自定义属性</summary>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        public static TAttribute GetCustomAttribute<TAttribute>(this Assembly assembly)
+        {
+            var avs = assembly.GetCustomAttributes<TAttribute>();
+            if (avs == null || avs.Length < 1) return default(TAttribute);
+
+            return avs[0];
+        }
+#endif
+
+#if NET4
+        private static DictionaryCache<MemberInfo, DictionaryCache<Type, Array>> _miCache = new DictionaryCache<MemberInfo, DictionaryCache<Type, Array>>();
+        private static DictionaryCache<MemberInfo, DictionaryCache<Type, Array>> _miCache2 = new DictionaryCache<MemberInfo, DictionaryCache<Type, Array>>();
+
+        /// <summary>获取自定义特性，带有缓存功能，避免因.Net内部GetCustomAttributes没有缓存而带来的损耗</summary>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <param name="member"></param>
+        /// <param name="inherit"></param>
+        /// <returns></returns>
+        public static TAttribute[] GetCustomAttributes<TAttribute>(this MemberInfo member, Boolean inherit = true)
+        {
+            if (member == null) return new TAttribute[0];
+
+            var micache = _miCache;
+            if (!inherit) micache = _miCache2;
+
+            // 二级字典缓存
+            var cache = micache.GetItem(member, m => new DictionaryCache<Type, Array>());
+            var atts = cache.GetItem(typeof(TAttribute), t =>
+            {
+                return member.GetCustomAttributes(t, inherit).Cast<TAttribute>().ToArray();
+            });
+            if (atts == null || atts.Length <= 0) return new TAttribute[0];
+
+            return atts as TAttribute[];
+        }
+#endif
 
         private static DictionaryCache<String, Object> _asmCache = new DictionaryCache<String, Object>();
+
+        /// <summary>获取自定义属性，带有缓存功能，避免因.Net内部GetCustomAttributes没有缓存而带来的损耗</summary>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        public static TAttribute[] GetCustomAttributes<TAttribute>(this Assembly assembly)
+        {
+            if (assembly == null) return new TAttribute[0];
+
+            var key = String.Format("{0}_{1}", assembly.FullName, typeof(TAttribute).FullName);
+
+            return (TAttribute[])_asmCache.GetItem(key, k =>
+            {
+                var atts = assembly.GetCustomAttributes(typeof(TAttribute), true) as TAttribute[];
+                return atts == null ? new TAttribute[0] : atts;
+            });
+        }
 
         /// <summary>获取成员绑定的显示名，优先DisplayName，然后Description</summary>
         /// <param name="member"></param>

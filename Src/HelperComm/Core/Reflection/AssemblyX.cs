@@ -6,7 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+#if __MOBILE__
+#elif __CORE__
+#else
 using System.Web;
+#endif
 using NewLife.Collections;
 using NewLife.Log;
 
@@ -64,6 +68,35 @@ namespace NewLife.Reflection
                 return _Compile;
             }
         }
+
+        private Version _CompileVersion;
+        /// <summary>编译版本</summary>
+        public Version CompileVersion
+        {
+            get
+            {
+                if (_CompileVersion == null)
+                {
+                    var ver = Asm.GetName().Version;
+                    if (ver == null) ver = new Version(1, 0);
+
+                    var dt = Compile;
+                    ver = new Version(ver.Major, ver.Minor, dt.Year, dt.Month * 100 + dt.Day);
+
+                    _CompileVersion = ver;
+                }
+                return _CompileVersion;
+            }
+        }
+
+        private String _Company;
+        /// <summary>公司名称</summary>
+        public String Company { get { return _Company ?? (_Company = "" + Asm.GetCustomAttributeValue<AssemblyCompanyAttribute, String>()); } }
+
+        private String _Description;
+        /// <summary>说明</summary>
+        public String Description { get { return _Description ?? (_Description = "" + Asm.GetCustomAttributeValue<AssemblyDescriptionAttribute, String>()); } }
+
         /// <summary>获取包含清单的已加载文件的路径或 UNC 位置。</summary>
         public String Location
         {
@@ -94,6 +127,24 @@ namespace NewLife.Reflection
             if (asm == null) return null;
 
             return cache.GetItem(asm, key => new AssemblyX(key));
+        }
+
+        static AssemblyX()
+        {
+#if !__MOBILE__ && !__CORE__
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += (sender, args) =>
+            {
+                var flag = XTrace.Debug && XTrace.Log.Level == LogLevel.Debug;
+                if (flag) XTrace.WriteLine("[{0}]请求只反射加载[{1}]", args.RequestingAssembly?.FullName, args.Name);
+                return Assembly.ReflectionOnlyLoad(args.Name);
+            };
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                var flag = XTrace.Debug && XTrace.Log.Level == LogLevel.Debug;
+                if (flag) XTrace.WriteLine("[{0}]请求加载[{1}]", args.RequestingAssembly?.FullName, args.Name);
+                return OnResolve(args.Name);
+            };
+#endif
         }
         #endregion
 
@@ -170,6 +221,11 @@ namespace NewLife.Reflection
         }
         #endregion
 
+        #region 静态属性
+        /// <summary>入口程序集</summary>
+        public static AssemblyX Entry { get { return Create(Assembly.GetEntryAssembly()); } }
+        #endregion
+
         #region 方法
         DictionaryCache<String, Type> typeCache2 = new DictionaryCache<String, Type>();
         /// <summary>从程序集中查找指定名称的类型</summary>
@@ -192,7 +248,40 @@ namespace NewLife.Reflection
 
             // 如果没有包含圆点，说明其不是FullName
             if (!typeName.Contains("."))
-            {                
+            {
+                //try
+                //{
+                //    var types = Asm.GetTypes();
+                //    if (types != null && types.Length > 0)
+                //    {
+                //        foreach (var item in types)
+                //        {
+                //            if (item.Name == typeName) return item;
+                //        }
+                //    }
+                //}
+                //catch (ReflectionTypeLoadException ex)
+                //{
+                //    if (XTrace.Debug)
+                //    {
+                //        //XTrace.WriteException(ex);
+                //        XTrace.WriteLine("加载[{0}]{1}的类型时发生个{2}错误！", this, Location, ex.LoaderExceptions.Length);
+
+                //        foreach (var item in ex.LoaderExceptions)
+                //        {
+                //            XTrace.WriteException(item);
+                //        }
+                //    }
+
+                //    return null;
+                //}
+                //catch (Exception ex)
+                //{
+                //    if (XTrace.Debug) XTrace.WriteException(ex);
+
+                //    return null;
+                //}
+
                 // 遍历所有类型，包括内嵌类型
                 foreach (var item in Types)
                 {
@@ -205,6 +294,11 @@ namespace NewLife.Reflection
         #endregion
 
         #region 插件
+        /// <summary>查找插件</summary>
+        /// <typeparam name="TPlugin"></typeparam>
+        /// <returns></returns>
+        internal List<Type> FindPlugins<TPlugin>() { return FindPlugins(typeof(TPlugin)); }
+
         private ConcurrentDictionary<Type, List<Type>> _plugins = new ConcurrentDictionary<Type, List<Type>>();
         /// <summary>查找插件，带缓存</summary>
         /// <param name="baseType">类型</param>
@@ -580,6 +674,59 @@ namespace NewLife.Reflection
             //return null;
         }
 #endif
+
+        /// <summary>获取当前应用程序的所有程序集，不包括系统程序集，仅限本目录</summary>
+        /// <returns></returns>
+        public static List<AssemblyX> GetMyAssemblies()
+        {
+            var list = new List<AssemblyX>();
+            var hs = new HashSet<String>(StringComparer.OrdinalIgnoreCase);
+            var cur = AppDomain.CurrentDomain.BaseDirectory;
+            foreach (var asmx in GetAssemblies())
+            {
+                // 加载程序集列表很容易抛出异常，全部屏蔽
+                try
+                {
+                    if (String.IsNullOrEmpty(asmx.FileVersion)) continue;
+                    var file = asmx.Asm.CodeBase;
+                    if (String.IsNullOrEmpty(file)) continue;
+                    file = file.TrimStart("file:///");
+                    file = file.Replace("/", "\\");
+                    if (!file.StartsWithIgnoreCase(cur)) continue;
+
+                    if (!hs.Contains(file))
+                    {
+                        hs.Add(file);
+                        list.Add(asmx);
+                    }
+                }
+                catch { }
+            }
+#if !__CORE__
+            foreach (var asmx in ReflectionOnlyGetAssemblies())
+            {
+                // 加载程序集列表很容易抛出异常，全部屏蔽
+                try
+                {
+                    if (String.IsNullOrEmpty(asmx.FileVersion)) continue;
+                    var file = asmx.Asm.CodeBase;
+                    if (String.IsNullOrEmpty(file)) continue;
+                    file = file.TrimStart("file:///");
+                    file = file.Replace("/", "\\");
+                    if (!file.StartsWithIgnoreCase(cur)) continue;
+
+                    if (!hs.Contains(file))
+                    {
+                        hs.Add(file);
+                        list.Add(asmx);
+                    }
+                }
+                catch { }
+            }
+#endif
+            return list;
+        }
+
         /// <summary>在对程序集的解析失败时发生</summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -644,6 +791,17 @@ namespace NewLife.Reflection
             else
                 return Name;
         }
+
+        ///// <summary>判断两个程序集是否相同，避免引用加载和执行上下文加载的相同程序集显示不同</summary>
+        ///// <param name="asm1"></param>
+        ///// <param name="asm2"></param>
+        ///// <returns></returns>
+        //public static Boolean Equal(Assembly asm1, Assembly asm2)
+        //{
+        //    if (asm1 == asm2) return true;
+
+        //    return asm1.FullName == asm2.FullName;
+        //}
         #endregion
     }
 }
