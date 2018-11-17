@@ -350,10 +350,6 @@ namespace NewLife
 #endif
         #endregion
     }
-
-#if __MOBILE__
-#elif __CORE__
-#else
     /// <summary>标识系统上的程序组</summary>
     [Flags]
     enum OSSuites : UInt16
@@ -469,5 +465,4 @@ namespace NewLife
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern Boolean GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
     }
-#endif
 }

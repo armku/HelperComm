@@ -66,7 +66,6 @@
     <Compile Include="Core\Data\Packet.cs" />
     <Compile Include="Core\Event\EventArgs.cs" />
     <Compile Include="Core\Exceptions\XException.cs" />
-    <Compile Include="Core\Extension\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Core\Extension\EnumHelper.cs" />
     <Compile Include="Core\Extension\StringHelper.cs" />
     <Compile Include="Core\IO\IOHelper.cs" />

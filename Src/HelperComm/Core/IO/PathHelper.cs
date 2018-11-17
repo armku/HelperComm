@@ -1,11 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-//using NewLife.IO;
-#if !__MOBILE__
-using System.IO.Compression;
-#endif
-
-namespace System.IO
+﻿namespace System.IO
 {
     /// <summary>路径操作帮助</summary>
     public static class PathHelper

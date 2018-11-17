@@ -10,14 +10,6 @@ namespace NewLife.Log
         private List<ILog> _Logs = new List<ILog>();
         /// <summary>日志提供者集合</summary>
         public List<ILog> Logs { get { return _Logs; } set { _Logs = value; } }
-
-        /// <summary>实例化</summary>
-        public CompositeLog() { }
-
-        /// <summary>实例化</summary>
-        /// <param name="log"></param>
-        public CompositeLog(ILog log) { Logs.Add(log); Level = log.Level; }
-
         /// <summary>实例化</summary>
         /// <param name="log1"></param>
         /// <param name="log2"></param>
@@ -32,12 +24,6 @@ namespace NewLife.Log
         /// <param name="log"></param>
         /// <returns></returns>
         public CompositeLog Add(ILog log) { Logs.Add(log); return this; }
-
-        /// <summary>删除日志提供者</summary>
-        /// <param name="log"></param>
-        /// <returns></returns>
-        public CompositeLog Remove(ILog log) { if (Logs.Contains(log)) Logs.Remove(log); return this; }
-
         /// <summary>写日志</summary>
         /// <param name="level"></param>
         /// <param name="format"></param>
