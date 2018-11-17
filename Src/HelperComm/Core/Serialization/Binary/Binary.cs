@@ -308,42 +308,8 @@ namespace NewLife.Serialization
             return -1;
         }
         #endregion
-
-        #region 有符号整数
-        /// <summary>读取整数的字节数组，某些写入器（如二进制写入器）可能需要改变字节顺序</summary>
-        /// <param name="count">数量</param>
-        /// <returns></returns>
-        Byte[] ReadIntBytes(Int32 count) { return Stream.ReadBytes(count); }
-
-        /// <summary>从当前流中读取 2 字节有符号整数，并使流的当前位置提升 2 个字节。</summary>
-        /// <returns></returns>
-        Int16 ReadInt16() { return BitConverter.ToInt16(ReadIntBytes(2), 0); }
-
-        /// <summary>从当前流中读取 4 字节有符号整数，并使流的当前位置提升 4 个字节。</summary>
-        /// <returns></returns>
-        Int32 ReadInt32() { return BitConverter.ToInt32(ReadIntBytes(4), 0); }
-        #endregion
-
+        
         #region 7位压缩编码整数
-        /// <summary>以压缩格式读取16位整数</summary>
-        /// <returns></returns>
-        public Int16 ReadEncodedInt16()
-        {
-            Byte b;
-            Int16 rs = 0;
-            Byte n = 0;
-            while (true)
-            {
-                b = ReadByte();
-                // 必须转为Int16，否则可能溢出
-                rs += (Int16)((b & 0x7f) << n);
-                if ((b & 0x80) == 0) break;
-
-                n += 7;
-                if (n >= 16) throw new FormatException("数字值过大，无法使用压缩格式读取！");
-            }
-            return rs;
-        }
 
         /// <summary>以压缩格式读取32位整数</summary>
         /// <returns></returns>
@@ -364,43 +330,6 @@ namespace NewLife.Serialization
             }
             return rs;
         }
-
-        /// <summary>以压缩格式读取64位整数</summary>
-        /// <returns></returns>
-        public Int64 ReadEncodedInt64()
-        {
-            Byte b;
-            Int64 rs = 0;
-            Byte n = 0;
-            while (true)
-            {
-                b = ReadByte();
-                // 必须转为Int64，否则可能溢出
-                rs += (Int64)(b & 0x7f) << n;
-                if ((b & 0x80) == 0) break;
-
-                n += 7;
-                if (n >= 64) throw new FormatException("数字值过大，无法使用压缩格式读取！");
-            }
-            return rs;
-        }
-        #endregion
-
-        #region 辅助函数
-
-        #endregion
-
-        #region 跟踪日志
-#if !__MOBILE__
-        /// <summary>使用跟踪流。实际上是重新包装一次Stream，必须在设置Stream后，使用之前</summary>
-        public virtual void EnableTrace()
-        {
-            var stream = Stream;
-            if (stream == null || stream is TraceStream) return;
-
-            Stream = new TraceStream(stream) { Encoding = Encoding, IsLittleEndian = IsLittleEndian };
-        }
-#endif
         #endregion
     }
 }
