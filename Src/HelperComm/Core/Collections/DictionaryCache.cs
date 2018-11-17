@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using NewLife.Threading;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using NewLife.Threading;
-#if NET4
-using Task = System.Threading.Tasks.TaskEx;
-#endif
 
 namespace NewLife.Collections
 {
@@ -27,15 +23,8 @@ namespace NewLife.Collections
         /// <summary>异步更新。默认false</summary>
         public Boolean Asynchronous { get; set; }
 
-        /// <summary>移除过期缓存项时，自动调用其Dispose。默认false</summary>
-        public Boolean AutoDispose { get; set; }
-
         /// <summary>是否缓存默认值，有时候委托返回默认值不希望被缓存，而是下一次尽快进行再次计算。默认true</summary>
         public Boolean CacheDefault { get; set; } = true;
-
-        /// <summary>延迟加锁，字典没有数据时，先计算结果再加锁加入字典，避免大量不同键的插入操作形成排队影响性能。默认false</summary>
-        [Obsolete("不再支持延迟加锁")]
-        public Boolean DelayLock { get; set; }
 
         private Dictionary<TKey, CacheItem> Items;
         #endregion
@@ -53,13 +42,7 @@ namespace NewLife.Collections
         {
             Items = new Dictionary<TKey, CacheItem>(comparer);
         }
-
-        /// <summary>销毁资源</summary>
-        ~DictionaryCache()
-        {
-            Dispose();
-        }
-
+        
         /// <summary>销毁字典，关闭</summary>
         public void Dispose()
         {

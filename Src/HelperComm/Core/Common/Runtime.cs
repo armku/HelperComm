@@ -1,15 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-#if !__CORE__
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
-#endif
 using System.Security;
-#if !__MOBILE__ && !__CORE__
 using System.Web;
-using Microsoft.VisualBasic.Devices;
-#endif
 
 namespace NewLife
 {
