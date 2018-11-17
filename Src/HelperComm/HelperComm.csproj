@@ -118,7 +118,6 @@
     <Compile Include="Core\Threading\TimerScheduler.cs" />
     <Compile Include="Core\Threading\TimerX.cs" />
     <Compile Include="Core\Windows\ControlHelper.cs" />
-    <Compile Include="Core\Xml\SerializableDictionary.cs" />
     <Compile Include="Core\Xml\XmlConfig.cs" />
     <Compile Include="Core\Xml\XmlConfigFileAttribute.cs" />
     <Compile Include="Core\Xml\XmlHelper.cs" />
