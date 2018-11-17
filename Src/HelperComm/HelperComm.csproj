@@ -65,7 +65,6 @@
     <Compile Include="Core\Common\Runtime.cs" />
     <Compile Include="Core\Common\SysConfig.cs" />
     <Compile Include="Core\Common\Utility.cs" />
-    <Compile Include="Core\Data\IFilter.cs" />
     <Compile Include="Core\Data\Packet.cs" />
     <Compile Include="Core\Event\EventArgs.cs" />
     <Compile Include="Core\Exceptions\XException.cs" />
