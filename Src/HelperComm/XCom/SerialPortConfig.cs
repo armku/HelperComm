@@ -52,14 +52,6 @@ namespace NewLife.Net
         /// <summary>十六进制发送</summary>
         [Description("十六进制发送")]
         public Boolean HexSend { get; set; }
-
-        /// <summary>最后更新时间</summary>
-        [Description("最后更新时间")]
-        public DateTime LastUpdate { get; set; }
-
-        /// <summary>扩展数据</summary>
-        [Description("扩展数据")]
-        public String Extend { get; set; } = "";
         /// <summary>
         /// 发送区内容
         /// </summary>
