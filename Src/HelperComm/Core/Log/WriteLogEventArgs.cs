@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-#if __MOBILE__
-#elif __CORE__
-#else
 using System.Web;
-#endif
 
 namespace NewLife.Log
 {

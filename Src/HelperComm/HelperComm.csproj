@@ -77,7 +77,6 @@
     <Compile Include="Core\Log\LogLevel.cs" />
     <Compile Include="Core\Log\TextControlLog.cs" />
     <Compile Include="Core\Log\TextFileLog.cs" />
-    <Compile Include="Core\Log\TraceStream.cs" />
     <Compile Include="Core\Log\WriteLogEventArgs.cs" />
     <Compile Include="Core\Log\XTrace.cs" />
     <Compile Include="Core\Messaging\IMessage.cs" />

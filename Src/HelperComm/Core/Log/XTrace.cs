@@ -1,18 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using NewLife.Reflection;
+using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-#if __MOBILE__
-#elif __CORE__
-#else
 using System.Windows.Forms;
-#endif
-using NewLife.Reflection;
 
 namespace NewLife.Log
 {
