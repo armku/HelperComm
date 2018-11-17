@@ -99,7 +99,6 @@
     <Compile Include="Core\Windows\ControlHelper.cs" />
     <Compile Include="Core\Xml\XmlConfig.cs" />
     <Compile Include="Core\Xml\XmlConfigFileAttribute.cs" />
-    <Compile Include="IXForm.cs" />
     <Compile Include="Engine\XConfig.cs" />
     <Compile Include="XCom\FrmMain.cs">
       <SubType>Form</SubType>

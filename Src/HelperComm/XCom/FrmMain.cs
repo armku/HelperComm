@@ -12,7 +12,7 @@ using NewLife.Net;
 namespace XCom
 {
     [DisplayName("串口调试工具")]
-    public partial class FrmMain : Form, IXForm
+    public partial class FrmMain : Form
     {
         /// <summary>业务日志输出</summary>
         ILog BizLog;
