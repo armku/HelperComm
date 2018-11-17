@@ -179,7 +179,7 @@ namespace NewLife.Log
 
         #region 属性
         /// <summary>是否调试。</summary>
-        public static Boolean Debug { get; set; } = Setting.Current.Debug;
+        public static Boolean Debug { get; set; } = true;
 
         /// <summary>文本日志目录</summary>
         public static String LogPath { get; set; } = Setting.Current.LogPath;
