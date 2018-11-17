@@ -167,14 +167,14 @@ namespace NewLife.Log
             sb.AppendFormat("#AppDomain: {0}\r\n", AppDomain.CurrentDomain.FriendlyName);
 
             var fileName = String.Empty;
-#if !__MOBILE__
+
             // MonoAndroid无法识别MainModule，致命异常
             try
             {
                 fileName = process.MainModule.FileName;
             }
             catch { }
-#endif
+
             if (fileName.IsNullOrEmpty() || !fileName.EndsWithIgnoreCase("dotnet.exe"))
             {
                 try
@@ -185,7 +185,7 @@ namespace NewLife.Log
             }
             if (!fileName.IsNullOrEmpty()) sb.AppendFormat("#FileName: {0}\r\n", fileName);
 
-#if !__CORE__
+
             // 应用域目录
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             sb.AppendFormat("#BaseDirectory: {0}\r\n", baseDir);
@@ -201,18 +201,9 @@ namespace NewLife.Log
             var line = System.Environment.CommandLine;
             if (!line.IsNullOrEmpty())
                 sb.AppendFormat("#CommandLine: {0}\r\n", line);
-#endif
 
             var apptype = "";
-#if __MOBILE__
-#if __ANDROID__
-            apptype = "Android";
-#elif __IOS__
-            apptype = "iOS";
-#else
-            apptype = "Mobile";
-#endif
-#else
+
             if (Runtime.IsWeb)
                 apptype = "Web";
             else if (!Environment.UserInteractive)
@@ -221,28 +212,17 @@ namespace NewLife.Log
                 apptype = "Console";
             else
                 apptype = "WinForm";
-#endif
 
             sb.AppendFormat("#ApplicationType: {0}\r\n", apptype);
 
-#if !__CORE__
-            sb.AppendFormat("#CLR: {0}, {1}\r\n", System.Environment.Version, ver);
-#endif
 
-#if __MOBILE__
-#if __ANDROID__
-            sb.AppendFormat("#OS: {0}, {1}/{2}\r\n", Build.Fingerprint, Build.Host, Build.Model);
-#elif __IOS__
-            sb.AppendFormat("#OS: {0}, {1}/{2}\r\n", "iOS", "", "");
-#else
-            sb.AppendFormat("#OS: {0}, {1}/{2}\r\n", "Mobile", "", "");
-#endif
-#else
-#if !__CORE__
+            sb.AppendFormat("#CLR: {0}, {1}\r\n", System.Environment.Version, ver);
+
+
+
             sb.AppendFormat("#OS: {0}, {3}, {1}/{2}\r\n", Runtime.OSName, Environment.UserName, Environment.MachineName, Environment.OSVersion);
             sb.AppendFormat("#Memory: {0:n0}M/{1:n0}M\r\n", Runtime.AvailableMemory, Runtime.PhysicalMemory);
-#endif
-#endif
+
             sb.AppendFormat("#CPU: {0}\r\n", System.Environment.ProcessorCount);
 
             sb.AppendFormat("#Date: {0:yyyy-MM-dd}\r\n", DateTime.Now);

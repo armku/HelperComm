@@ -548,18 +548,6 @@ namespace NewLife.Reflection
                     var plugin = Setting.Current.GetPluginPath();
                     if (!set.Contains(plugin)) set.Add(plugin);
 
-                    //// 增加所有程序集所在目录为搜索目录，便于查找程序集
-                    //foreach (var asm in GetAssemblies())
-                    //{
-                    //    // GAC程序集和系统程序集跳过
-                    //    if (asm.Asm.GlobalAssemblyCache) continue;
-                    //    if (asm.IsSystemAssembly) continue;
-                    //    if (String.IsNullOrEmpty(asm.Location)) continue;
-
-                    //    var dir = Path.GetDirectoryName(asm.Location).EnsureEnd("\\");
-                    //    if (!set.Contains(dir)) set.Add(dir);
-                    //}
-
                     _AssemblyPaths = set;
                 }
                 return _AssemblyPaths;

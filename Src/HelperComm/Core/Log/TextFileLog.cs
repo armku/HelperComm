@@ -14,8 +14,6 @@ namespace NewLife.Log
     public class TextFileLog : Logger, IDisposable
     {
         #region 构造
-        /// <summary>该构造函数没有作用，为了继承而设置</summary>
-        public TextFileLog() { }
 
         private TextFileLog(String path, Boolean isfile, String fileFormat = null)
         {
@@ -44,17 +42,6 @@ namespace NewLife.Log
 
             var key = (path + fileFormat).ToLower();
             return cache.GetItem(key, k => new TextFileLog(path, false, fileFormat));
-        }
-
-        /// <summary>每个目录的日志实例应该只有一个，所以采用静态创建</summary>
-        /// <param name="path">日志目录或日志文件路径</param>
-        /// <returns></returns>
-        public static TextFileLog CreateFile(String path)
-        {
-            if (String.IsNullOrEmpty(path)) return Create(path);
-
-            var key = path.ToLower();
-            return cache.GetItem(key, k => new TextFileLog(path, true));
         }
 
         /// <summary>销毁</summary>
@@ -165,23 +152,6 @@ namespace NewLife.Log
             }
             return LogWriter = writer;
         }
-
-        ///// <summary>停止日志</summary>
-        //protected virtual void CloseWriter(Object obj)
-        //{
-        //    var writer = LogWriter;
-        //    if (writer == null) return;
-        //    lock (Log_Lock)
-        //    {
-        //        try
-        //        {
-        //            if (writer == null) return;
-        //            writer.Dispose();
-        //            LogWriter = null;
-        //        }
-        //        catch { }
-        //    }
-        //}
         #endregion
 
         #region 异步写日志
@@ -218,27 +188,6 @@ namespace NewLife.Log
                 writer.WriteLine(str);
             }
         }
-
-        ///// <summary>使用线程池线程异步执行日志写入动作</summary>
-        ///// <param name="e"></param>
-        //protected virtual void PerformWriteLog(WriteLogEventArgs e)
-        //{
-        //    lock (Log_Lock)
-        //    {
-        //        try
-        //        {
-        //            // 初始化日志读写器
-        //            if (LogWriter == null) InitLog();
-        //            // 写日志
-        //            LogWriter.WriteLine(e.ToString());
-        //            // 声明自动关闭日志读写器的定时器。无限延长时间，实际上不工作
-        //            if (_Timer == null) _Timer = new Timer(CloseWriter, null, Timeout.Infinite, Timeout.Infinite);
-        //            // 改变定时器为5秒后触发一次。如果5秒内有多次写日志操作，估计定时器不会触发，直到空闲五秒为止
-        //            _Timer.Change(5000, Timeout.Infinite);
-        //        }
-        //        catch { }
-        //    }
-        //}
         #endregion
 
         #region 写日志
