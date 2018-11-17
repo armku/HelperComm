@@ -1,9 +1,4 @@
-﻿using NewLife.Collections;
-using NewLife.Log;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace System
