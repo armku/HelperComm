@@ -127,7 +127,6 @@ namespace NewLife.Net
             var qs = Items;
             if (qs.Count == 0)
             {
-                _Timer.TryDispose();
                 _Timer = null;
                 return;
             }

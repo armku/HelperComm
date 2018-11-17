@@ -37,7 +37,7 @@ namespace NewLife.Net
     /// }
     /// </code>
     /// </example>
-    public class SerialTransport : DisposeBase, ITransport, IDisposable
+    public class SerialTransport
     {
         #region 属性
         private SerialPort _Serial;
@@ -106,20 +106,6 @@ namespace NewLife.Net
         {
             // 每隔一段时间检查一次串口是否已经关闭，如果串口已经不存在，则关闭该传输口
             timer = new TimerX(CheckDisconnect, null, 3000, 3000);
-        }
-
-        /// <summary>销毁</summary>
-        /// <param name="disposing"></param>
-        protected override void OnDispose(Boolean disposing)
-        {
-            base.OnDispose(disposing);
-
-            try
-            {
-                if (Serial != null) Close();
-                if (timer != null) timer.Dispose();
-            }
-            catch { }
         }
         #endregion
 
@@ -281,7 +267,7 @@ namespace NewLife.Net
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                
             }

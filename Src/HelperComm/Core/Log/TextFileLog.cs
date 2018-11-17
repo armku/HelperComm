@@ -202,7 +202,6 @@ namespace NewLife.Log
                 if (_NextClose < now)
                 {
                     LogWriter = null;
-                    writer.TryDispose();
 
                     _NextClose = now.AddSeconds(5);
                 }

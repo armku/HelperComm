@@ -105,12 +105,6 @@ namespace NewLife.Log
         }
         #endregion
 
-        #region 使用控制台输出
-#if !__MOBILE__
-        private static Boolean _useConsole;
-#endif
-        #endregion
-
         #region 拦截WinForm异常
 #if __MOBILE__
 #elif __CORE__

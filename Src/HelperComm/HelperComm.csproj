@@ -61,7 +61,6 @@
     <Compile Include="Core\Collections\CollectionHelper.cs" />
     <Compile Include="Core\Collections\DictionaryCache.cs" />
     <Compile Include="Core\Collections\NullableDictionary.cs" />
-    <Compile Include="Core\Common\DisposeBase.cs" />
     <Compile Include="Core\Common\Runtime.cs" />
     <Compile Include="Core\Common\Utility.cs" />
     <Compile Include="Core\Data\Packet.cs" />
@@ -79,7 +78,6 @@
     <Compile Include="Core\Log\LogLevel.cs" />
     <Compile Include="Core\Log\TextControlLog.cs" />
     <Compile Include="Core\Log\TextFileLog.cs" />
-    <Compile Include="Core\Log\TimeCost.cs" />
     <Compile Include="Core\Log\TraceStream.cs" />
     <Compile Include="Core\Log\WriteLogEventArgs.cs" />
     <Compile Include="Core\Log\XTrace.cs" />

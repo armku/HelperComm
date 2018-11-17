@@ -20,7 +20,6 @@ namespace System.Windows.Forms
 
             control.BeginInvoke(new Action(() =>
             {
-                using (var tc = new TimeCost("Control.Invoke", 500))
                 {
                     method();
                 }
@@ -120,9 +119,6 @@ namespace System.Windows.Forms
 
             return txt;
         }
-        static TimerX _timer;
-        static Boolean _Beep;
-
         [DllImport("user32.dll")]
         static extern Int32 SendMessage(IntPtr hwnd, Int32 wMsg, Int32 wParam, Int32 lParam);
         private const Int32 SB_TOP = 6;

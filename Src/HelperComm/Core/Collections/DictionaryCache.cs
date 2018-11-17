@@ -157,7 +157,6 @@ namespace NewLife.Collections
 
         void StopTimer()
         {
-            clearTimer.TryDispose();
             clearTimer = null;
         }
 
@@ -190,9 +189,6 @@ namespace NewLife.Collections
                     var t = item.Value.ExpiredTime;
                     if (t < now)
                     {
-                        // 自动释放对象
-                        if (AutoDispose) item.Value.Value.TryDispose();
-
                         dic.Remove(item.Key);
                     }
                 }
