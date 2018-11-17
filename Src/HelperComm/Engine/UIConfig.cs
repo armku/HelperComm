@@ -46,42 +46,12 @@ namespace XCoder
                 buf = cfg.Extend.ToBase64();
             }
             catch { return null; }
-
-            var ms = new MemoryStream(buf);
-
-            var binary = new Binary();
-            binary.EncodeInt = true;
-            binary.AddHandler<BinaryFont>(11);
-            binary.AddHandler<BinaryColor>(12);
-            binary.AddHandler<BinaryUnknown>(20);
-            binary.Stream = ms;
-
-            //binary.Debug = true;
-            //binary.EnableTrace();
-
-            try
-            {
-                return binary.Read(typeof(UIConfig)) as UIConfig;
-            }
-            catch { return null; }
+            return null;
         }
 
         public void Save()
         {
-            var binary = new Binary();
-            binary.EncodeInt = true;
-            binary.AddHandler<BinaryFont>(11);
-            binary.AddHandler<BinaryColor>(12);
-            binary.AddHandler<BinaryUnknown>(20);
-
-            //binary.Debug = true;
-            //binary.EnableTrace();
-
-            binary.Write(this);
-
-            var cfg = XConfig.Current;
-            cfg.Extend = binary.GetBytes().ToBase64(0, 0, true);
-            cfg.Save();
+            
         }
 
         public static UIConfig Apply(TextBoxBase txt)
