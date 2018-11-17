@@ -49,15 +49,7 @@ namespace NewLife.Log
 
             Log.Info(format, args);
         }
-
-        ///// <summary>异步写日志</summary>
-        ///// <param name="format"></param>
-        ///// <param name="args"></param>
-        //public static void WriteLineAsync(String format, params Object[] args)
-        //{
-        //    ThreadPool.QueueUserWorkItem(s => WriteLine(format, args));
-        //}
-
+        
         /// <summary>输出异常日志</summary>
         /// <param name="ex">异常信息</param>
         public static void WriteException(Exception ex)
@@ -69,39 +61,6 @@ namespace NewLife.Log
         #endregion
 
         #region 构造
-        static XTrace()
-        {
-#if __CORE__
-#else
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-#endif
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-        }
-
-#if __MOBILE__
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            var msg = "" + e.ExceptionObject;
-            WriteLine(msg);
-            if (e.IsTerminating)
-            {
-                Log.Fatal("异常退出！");
-            }
-        }
-#endif
-
-        private static void TaskScheduler_UnobservedTaskException(Object sender, UnobservedTaskExceptionEventArgs e)
-        {
-            if (!e.Observed)
-            {
-                //WriteException(e.Exception);
-                foreach (var ex in e.Exception.Flatten().InnerExceptions)
-                {
-                    WriteException(ex);
-                }
-                e.SetObserved();
-            }
-        }
 
         static Object _lock = new Object();
         static Int32 _initing = 0;
@@ -149,32 +108,6 @@ namespace NewLife.Log
         #region 使用控制台输出
 #if !__MOBILE__
         private static Boolean _useConsole;
-        /// <summary>使用控制台输出日志，只能调用一次</summary>
-        /// <param name="useColor">是否使用颜色，默认使用</param>
-        /// <param name="useFileLog">是否同时使用文件日志，默认使用</param>
-        public static void UseConsole(Boolean useColor = true, Boolean useFileLog = true)
-        {
-            if (_useConsole) return;
-            _useConsole = true;
-
-#if !__CORE__
-            if (!Runtime.IsConsole) return;
-#endif
-
-            // 适当加大控制台窗口
-            try
-            {
-                if (Console.WindowWidth <= 80) Console.WindowWidth = Console.WindowWidth * 3 / 2;
-                if (Console.WindowHeight <= 25) Console.WindowHeight = Console.WindowHeight * 3 / 2;
-            }
-            catch { }
-
-            var clg = new ConsoleLog { UseColor = useColor };
-            if (useFileLog)
-                _Log = new CompositeLog(clg, Log);
-            else
-                _Log = clg;
-        }
 #endif
         #endregion
 
@@ -198,26 +131,7 @@ namespace NewLife.Log
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += Application_ThreadException;
         }
-
-        static void CurrentDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
-        {
-            var show = _ShowErrorMessage && Application.MessageLoop;
-            var ex = e.ExceptionObject as Exception;
-            var msg = ex == null ? "" : ex.Message;
-            WriteException(ex);
-            if (e.IsTerminating)
-            {
-                Log.Fatal("异常退出！" + msg);
-                if (show) MessageBox.Show(msg, "异常退出", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                ex = ex.GetTrue();
-                if (ex != null) Log.Error(ex.Message);
-                if (show) MessageBox.Show(msg, "出错", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+        
         static void Application_ThreadException(Object sender, ThreadExceptionEventArgs e)
         {
             WriteException(e.Exception);
@@ -284,191 +198,8 @@ namespace NewLife.Log
 
         /// <summary>文本日志目录</summary>
         public static String LogPath { get; set; } = Setting.Current.LogPath;
-
-        /// <summary>临时目录</summary>
-        public static String TempPath { get; set; } = Setting.Current.TempPath;
         #endregion
-
-        #region Dump
-#if __MOBILE__
-#elif __CORE__
-#else
-        /// <summary>写当前线程的MiniDump</summary>
-        /// <param name="dumpFile">如果不指定，则自动写入日志目录</param>
-        public static void WriteMiniDump(String dumpFile)
-        {
-            if (String.IsNullOrEmpty(dumpFile))
-            {
-                dumpFile = String.Format("{0:yyyyMMdd_HHmmss}.dmp", DateTime.Now);
-                if (!String.IsNullOrEmpty(LogPath)) dumpFile = Path.Combine(LogPath, dumpFile);
-            }
-
-            MiniDump.TryDump(dumpFile, MiniDump.MiniDumpType.WithFullMemory);
-        }
-
-        /// <summary>
-        /// 该类要使用在windows 5.1 以后的版本，如果你的windows很旧，就把Windbg里面的dll拷贝过来，一般都没有问题。
-        /// DbgHelp.dll 是windows自带的 dll文件 。
-        /// </summary>
-        static class MiniDump
-        {
-            [DllImport("DbgHelp.dll")]
-            private static extern Boolean MiniDumpWriteDump(IntPtr hProcess, Int32 processId, IntPtr fileHandle, MiniDumpType dumpType, ref MinidumpExceptionInfo excepInfo, IntPtr userInfo, IntPtr extInfo);
-
-            /// <summary>MINIDUMP_EXCEPTION_INFORMATION</summary>
-            struct MinidumpExceptionInfo
-            {
-                public UInt32 ThreadId;
-                public IntPtr ExceptionPointers;
-                public UInt32 ClientPointers;
-            }
-
-            [DllImport("kernel32.dll")]
-            private static extern UInt32 GetCurrentThreadId();
-
-            public static Boolean TryDump(String dmpPath, MiniDumpType dmpType)
-            {
-                //使用文件流来创健 .dmp文件
-                using (var stream = new FileStream(dmpPath, FileMode.Create))
-                {
-                    //取得进程信息
-                    var process = Process.GetCurrentProcess();
-
-                    // MINIDUMP_EXCEPTION_INFORMATION 信息的初始化
-                    var mei = new MinidumpExceptionInfo
-                    {
-                        ThreadId = GetCurrentThreadId(),
-                        ExceptionPointers = Marshal.GetExceptionPointers(),
-                        ClientPointers = 1
-                    };
-
-                    //这里调用的Win32 API
-                    var fileHandle = stream.SafeFileHandle.DangerousGetHandle();
-                    var res = MiniDumpWriteDump(process.Handle, process.Id, fileHandle, dmpType, ref mei, IntPtr.Zero, IntPtr.Zero);
-
-                    //清空 stream
-                    stream.Flush();
-                    stream.Close();
-
-                    return res;
-                }
-            }
-
-            public enum MiniDumpType
-            {
-                None = 0x00010000,
-                Normal = 0x00000000,
-                WithDataSegs = 0x00000001,
-                WithFullMemory = 0x00000002,
-                WithHandleData = 0x00000004,
-                FilterMemory = 0x00000008,
-                ScanMemory = 0x00000010,
-                WithUnloadedModules = 0x00000020,
-                WithIndirectlyReferencedMemory = 0x00000040,
-                FilterModulePaths = 0x00000080,
-                WithProcessThreadData = 0x00000100,
-                WithPrivateReadWriteMemory = 0x00000200,
-                WithoutOptionalData = 0x00000400,
-                WithFullMemoryInfo = 0x00000800,
-                WithThreadInfo = 0x00001000,
-                WithCodeSegs = 0x00002000
-            }
-        }
-#endif
-        #endregion
-
-        #region 调用栈
-#if __CORE__
-#else
-        /// <summary>堆栈调试。
-        /// 输出堆栈信息，用于调试时处理调用上下文。
-        /// 本方法会造成大量日志，请慎用。
-        /// </summary>
-        public static void DebugStack()
-        {
-            var msg = GetCaller(2, 16, Environment.NewLine);
-            WriteLine("调用堆栈：" + Environment.NewLine + msg);
-        }
-
-        /// <summary>堆栈调试。</summary>
-        /// <param name="maxNum">最大捕获堆栈方法数</param>
-        public static void DebugStack(Int32 maxNum)
-        {
-            var msg = GetCaller(2, maxNum, Environment.NewLine);
-            WriteLine("调用堆栈：" + Environment.NewLine + msg);
-        }
-
-        /// <summary>堆栈调试</summary>
-        /// <param name="start">开始方法数，0是DebugStack的直接调用者</param>
-        /// <param name="maxNum">最大捕获堆栈方法数</param>
-        public static void DebugStack(Int32 start, Int32 maxNum)
-        {
-            // 至少跳过当前这个
-            if (start < 1) start = 1;
-            var msg = GetCaller(start + 1, maxNum, Environment.NewLine);
-            WriteLine("调用堆栈：" + Environment.NewLine + msg);
-        }
-
-        /// <summary>获取调用栈</summary>
-        /// <param name="start">要跳过的方法数，默认1，也就是跳过GetCaller</param>
-        /// <param name="maxNum">最大层数</param>
-        /// <param name="split">分割符号，默认左箭头加上换行</param>
-        /// <returns></returns>
-        public static String GetCaller(Int32 start = 1, Int32 maxNum = 0, String split = null)
-        {
-            // 至少跳过当前这个
-            if (start < 1) start = 1;
-            var st = new StackTrace(start, true);
-
-            if (String.IsNullOrEmpty(split)) split = "<-" + Environment.NewLine;
-
-            Type last = null;
-            var asm = Assembly.GetEntryAssembly();
-            var entry = asm?.EntryPoint;
-
-            var count = st.FrameCount;
-            var sb = new StringBuilder(count * 20);
-            //if (maxNum > 0 && maxNum < count) count = maxNum;
-            for (var i = 0; i < count && maxNum > 0; i++)
-            {
-                var sf = st.GetFrame(i);
-                var method = sf.GetMethod();
-
-                // 跳过<>类型的匿名方法
-                if (method == null || String.IsNullOrEmpty(method.Name) || method.Name[0] == '<' && method.Name.Contains(">")) continue;
-
-                // 跳过有[DebuggerHidden]特性的方法
-                if (method.GetCustomAttribute<DebuggerHiddenAttribute>() != null) continue;
-
-                var type = method.DeclaringType ?? method.ReflectedType;
-                if (type != null) sb.Append(type.Name);
-                sb.Append(".");
-
-                var name = method.ToString();
-                // 去掉前面的返回类型
-                var p = name.IndexOf(" ");
-                if (p >= 0) name = name.Substring(p + 1);
-                // 去掉前面的System
-                name = name
-                    .Replace("System.Web.", null)
-                    .Replace("System.", null);
-
-                sb.Append(name);
-
-                // 如果到达了入口点，可以结束了
-                if (method == entry) break;
-
-                if (i < count - 1) sb.Append(split);
-
-                last = type;
-
-                maxNum--;
-            }
-            return sb.ToString();
-        }
-#endif
-        #endregion
-
+        
         #region 版本信息
         /// <summary>输出核心库和启动程序的版本号</summary>
         public static void WriteVersion()
