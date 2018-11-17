@@ -77,40 +77,6 @@ namespace NewLife.Threading
             Scheduler = scheduler.IsNullOrEmpty() ? TimerScheduler.Default : TimerScheduler.Create(scheduler);
             Scheduler.Add(this);
         }
-
-        /// <summary>实例化一个绝对定时器</summary>
-        /// <param name="callback">委托</param>
-        /// <param name="state">用户数据</param>
-        /// <param name="startTime">绝对开始时间</param>
-        /// <param name="period">间隔周期。毫秒</param>
-        /// <param name="scheduler">调度器</param>
-        public TimerX(WaitCallback callback, Object state, DateTime startTime, Int32 period, String scheduler = null)
-        {
-            if (startTime <= DateTime.MinValue) throw new ArgumentOutOfRangeException(nameof(startTime));
-            //if (period < 0) throw new ArgumentOutOfRangeException("period");
-
-            Callback = callback ?? throw new ArgumentNullException(nameof(callback));
-            State = state;
-            Period = period;
-            Absolutely = true;
-
-            var now = DateTime.Now;
-            var next = startTime;
-            if (period % 1000 == 0)
-            {
-                var s = period / 1000;
-                while (next < now) next = next.AddSeconds(s);
-            }
-            else
-            {
-                while (next < now) next = next.AddMilliseconds(period);
-            }
-            NextTime = next;
-
-            Scheduler = scheduler.IsNullOrEmpty() ? TimerScheduler.Default : TimerScheduler.Create(scheduler);
-            Scheduler.Add(this);
-        }
-
         /// <summary>销毁定时器</summary>
         public void Dispose()
         {
@@ -121,29 +87,9 @@ namespace NewLife.Threading
         #region 方法
         /// <summary>是否已设置下一次时间</summary>
         internal Boolean hasSetNext;
-
-        /// <summary>设置下一次运行时间</summary>
-        /// <param name="ms">小于等于0表示马上调度</param>
-        public void SetNext(Int32 ms)
-        {
-            NextTime = DateTime.Now.AddMilliseconds(ms);
-
-            hasSetNext = true;
-
-            Scheduler.Wake();
-        }
         #endregion
 
         #region 静态方法
-        /// <summary>延迟执行一个委托</summary>
-        /// <param name="callback"></param>
-        /// <param name="ms"></param>
-        /// <returns></returns>
-        public static TimerX Delay(WaitCallback callback, Int32 ms)
-        {
-            var timer = new TimerX(callback, null, ms, 0);
-            return timer;
-        }
 
         private static TimerX _NowTimer;
         private static DateTime _Now;
