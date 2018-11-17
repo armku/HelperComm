@@ -8,6 +8,7 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
 using NewLife.Xml;
+using XCom;
 
 namespace XCoder
 {
@@ -32,7 +33,7 @@ namespace XCoder
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMDI());            
+            Application.Run(new FrmMain());            
         }
     }
 }

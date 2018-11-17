@@ -122,12 +122,6 @@
     <Compile Include="Core\Xml\XmlConfig.cs" />
     <Compile Include="Core\Xml\XmlConfigFileAttribute.cs" />
     <Compile Include="Core\Xml\XmlHelper.cs" />
-    <Compile Include="FrmMDI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMDI.Designer.cs">
-      <DependentUpon>FrmMDI.cs</DependentUpon>
-    </Compile>
     <Compile Include="IXForm.cs" />
     <Compile Include="Engine\XConfig.cs" />
     <Compile Include="XCom\FrmMain.cs">
@@ -149,9 +143,6 @@
       <DependentUpon>SerialPortList.cs</DependentUpon>
     </Compile>
     <Compile Include="XCom\SerialTransport.cs" />
-    <EmbeddedResource Include="FrmMDI.resx">
-      <DependentUpon>FrmMDI.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
